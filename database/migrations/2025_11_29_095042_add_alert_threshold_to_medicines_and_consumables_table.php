@@ -11,9 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('medicines', function (Blueprint $table) {
-            $table->integer('alert_threshold')->default(0)->after('unit');
-        });
+
 
         Schema::table('consumables', function (Blueprint $table) {
             $table->integer('alert_threshold')->default(0)->after('unit');
@@ -25,9 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('medicines', function (Blueprint $table) {
-            $table->dropColumn('alert_threshold');
-        });
+
 
         Schema::table('consumables', function (Blueprint $table) {
             $table->dropColumn('alert_threshold');

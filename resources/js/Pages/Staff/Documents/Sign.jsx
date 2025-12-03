@@ -6,7 +6,7 @@ import SignatureCanvas from 'react-signature-canvas';
 export default function Sign({ auth, patient, templates }) {
     const [selectedTemplateId, setSelectedTemplateId] = useState('');
     const sigCanvas = useRef({});
-    
+
     const { data, setData, post, processing, errors } = useForm({
         document_template_id: '',
         signature_image: '',
@@ -17,14 +17,14 @@ export default function Sign({ auth, patient, templates }) {
         const templateId = e.target.value;
         setSelectedTemplateId(templateId);
         const template = templates.find(t => t.id == templateId);
-        
+
         setData(prev => ({
             ...prev,
             document_template_id: templateId,
             signed_content: template ? template.content : '',
             signature_image: '',
         }));
-        
+
         if (sigCanvas.current && sigCanvas.current.clear) {
             sigCanvas.current.clear();
         }
@@ -37,7 +37,7 @@ export default function Sign({ auth, patient, templates }) {
 
     const submit = (e) => {
         e.preventDefault();
-        
+
         if (sigCanvas.current.isEmpty()) {
             alert('署名してください。');
             return;
@@ -63,7 +63,7 @@ export default function Sign({ auth, patient, templates }) {
                             電子署名の作成
                         </h3>
                         <p className="mt-1 text-sm text-gray-500">
-                            患者様: <span className="font-medium text-gray-900">{patient.name} 様</span>
+                            お客様: <span className="font-medium text-gray-900">{patient.name} 様</span>
                         </p>
                     </div>
 
@@ -107,11 +107,11 @@ export default function Sign({ auth, patient, templates }) {
                                         署名 <span className="text-red-500">*</span>
                                     </label>
                                     <div className="border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 inline-block overflow-hidden">
-                                        <SignatureCanvas 
+                                        <SignatureCanvas
                                             penColor="black"
                                             canvasProps={{
-                                                width: 500, 
-                                                height: 200, 
+                                                width: 500,
+                                                height: 200,
                                                 className: 'cursor-crosshair bg-white'
                                             }}
                                             ref={sigCanvas}
@@ -121,8 +121,8 @@ export default function Sign({ auth, patient, templates }) {
                                         />
                                     </div>
                                     <div className="mt-2 flex justify-start">
-                                        <button 
-                                            type="button" 
+                                        <button
+                                            type="button"
                                             onClick={clearSignature}
                                             className="text-sm text-gray-500 hover:text-red-600 underline transition-colors"
                                         >

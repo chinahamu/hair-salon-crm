@@ -22,7 +22,7 @@ class StaffSeeder extends Seeder
         }
 
         // Ensure common roles exist for staff guard
-        $roleNames = ['doctor', 'nurse', 'reception', 'counselor', 'admin'];
+        $roleNames = ['stylist', 'assistant', 'reception', 'manager', 'admin'];
         foreach ($roleNames as $r) {
             Role::firstOrCreate(['name' => $r, 'guard_name' => 'staff']);
         }
@@ -50,7 +50,7 @@ class StaffSeeder extends Seeder
         $filament->assignRole('admin');
 
         // Create additional staff members
-        $roles = ['doctor', 'nurse', 'reception', 'counselor'];
+        $roles = ['stylist', 'assistant', 'reception'];
         foreach ($roles as $roleName) {
             Staff::factory()
                 ->count(3)

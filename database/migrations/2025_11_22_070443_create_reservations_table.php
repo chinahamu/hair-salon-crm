@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('menu_id')->constrained()->onDelete('cascade');
             $table->foreignId('staff_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('room_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('machine_id')->nullable()->constrained()->onDelete('set null');
+
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->string('reservation_type')->default('new');

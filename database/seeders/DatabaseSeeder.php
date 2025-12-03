@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             ClinicScheduleSeeder::class,
             MasterDataSeeder::class,
             StaffSeeder::class,
-            PatientSeeder::class,
+            CustomerSeeder::class,
             ContractSeeder::class,
             DocumentTemplateSeeder::class,
             ReservationSeeder::class,
@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             // 追加シーダー
             \Database\Seeders\ClinicRoleSeeder::class,
             MenuSeeder::class,
-            MedicineAndConsumableSeeder::class,
+            ConsumableSeeder::class,
             MenuItemSeeder::class,
         ]);
     }

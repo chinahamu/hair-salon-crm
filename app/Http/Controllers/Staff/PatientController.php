@@ -73,6 +73,6 @@ class PatientController extends Controller
         $patient->update($validated);
 
         return redirect()->route('staff.patients.show', $patient)
-            ->with('success', '患者情報を更新しました。');
+            ->with('success', '顧客情報を更新しました。');
     }
 }

@@ -23,9 +23,9 @@ class ClinicRoleSeeder extends Seeder
             'owner' => 'オーナー',
             'admin' => '管理者',
             'manager' => 'マネージャー',
-            'doctor' => '医師',
+            'stylist' => 'スタイリスト',
+            'assistant' => 'アシスタント',
             'reception' => '受付',
-            'nurse' => '看護師',
             'staff' => 'スタッフ',
         ];
 

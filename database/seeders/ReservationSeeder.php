@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Clinic;
-use App\Models\Machine;
+
 use App\Models\Menu;
 use App\Models\Reservation;
 use App\Models\Room;
@@ -20,11 +20,10 @@ class ReservationSeeder extends Seeder
     public function run(): void
     {
         $clinic = Clinic::first();
-        $users = User::role('patient')->get();
+        $users = User::role('customer')->get();
         $menus = Menu::all();
         $staffs = Staff::where('clinic_id', $clinic->id)->get();
         $rooms = Room::where('clinic_id', $clinic->id)->get();
-        $machines = Machine::where('clinic_id', $clinic->id)->get();
 
         if ($users->isEmpty() || $menus->isEmpty() || $staffs->isEmpty() || $rooms->isEmpty()) {
             return;
@@ -99,7 +98,6 @@ class ReservationSeeder extends Seeder
                         'menu_id' => $menu->id,
                         'staff_id' => $staffs->random()->id,
                         'room_id' => $rooms->random()->id,
-                        'machine_id' => $machines->isNotEmpty() ? $machines->random()->id : null,
                         'clinic_id' => $clinic->id,
                         'start_time' => $startTime,
                         'end_time' => $endTime,

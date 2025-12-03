@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Menu;
 use App\Models\Room;
-use App\Models\Machine;
+
 use App\Models\Staff;
 use App\Models\Shift;
 use App\Models\Clinic;
@@ -26,7 +26,7 @@ class ClinicSeeder extends Seeder
         ]);
 
         // Create Roles
-        $roles = ['doctor', 'nurse', 'reception', 'counselor', 'hq'];
+        $roles = ['stylist', 'assistant', 'reception', 'manager', 'admin'];
         foreach ($roles as $roleName) {
             Role::firstOrCreate(['name' => $roleName, 'guard_name' => 'staff']);
         }
@@ -34,24 +34,22 @@ class ClinicSeeder extends Seeder
 
 
         // Rooms
-        $room1 = Room::firstOrCreate(['name' => '診察室1', 'clinic_id' => $clinic->id], ['type' => 'consultation', 'clinic_id' => $clinic->id]);
-        $room2 = Room::firstOrCreate(['name' => '処置室1', 'clinic_id' => $clinic->id], ['type' => 'treatment', 'clinic_id' => $clinic->id]);
-
-        // Machines
-        $machine1 = Machine::firstOrCreate(['name' => 'レーザー機器A', 'clinic_id' => $clinic->id], ['type' => 'laser', 'clinic_id' => $clinic->id]);
+        $room1 = Room::firstOrCreate(['name' => 'セット面1', 'clinic_id' => $clinic->id], ['type' => 'seat', 'clinic_id' => $clinic->id]);
+        $room2 = Room::firstOrCreate(['name' => 'シャンプー台1', 'clinic_id' => $clinic->id], ['type' => 'shampoo', 'clinic_id' => $clinic->id]);
 
         // Staff
+        // Staff
         $staff1 = Staff::firstOrCreate(
-            ['email' => 'doctor@example.com'],
-            ['name' => '医師 太郎', 'password' => bcrypt('password'), 'clinic_id' => $clinic->id]
+            ['email' => 'stylist@example.com'],
+            ['name' => 'スタイリスト 太郎', 'password' => bcrypt('password'), 'clinic_id' => $clinic->id]
         );
-        $staff1->assignRole('doctor');
+        $staff1->assignRole('stylist');
 
         $staff2 = Staff::firstOrCreate(
-            ['email' => 'nurse@example.com'],
-            ['name' => '看護師 花子', 'password' => bcrypt('password'), 'clinic_id' => $clinic->id]
+            ['email' => 'assistant@example.com'],
+            ['name' => 'アシスタント 花子', 'password' => bcrypt('password'), 'clinic_id' => $clinic->id]
         );
-        $staff2->assignRole('nurse');
+        $staff2->assignRole('assistant');
 
         // Shifts (Today and Tomorrow)
         $today = Carbon::today();

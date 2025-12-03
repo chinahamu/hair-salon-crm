@@ -8,29 +8,29 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
-class PatientSeeder extends Seeder
+class CustomerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        // Ensure patient role exists
-        $role = Role::firstOrCreate(['name' => 'patient', 'guard_name' => 'web']);
+        // Ensure customer role exists
+        $role = Role::firstOrCreate(['name' => 'customer', 'guard_name' => 'web']);
 
-        // Create guaranteed test patient user from README
-        $patient = User::firstOrCreate(
-            ['email' => 'patient@example.com'],
+        // Create guaranteed test customer user from README
+        $customer = User::firstOrCreate(
+            ['email' => 'customer@example.com'],
             [
-                'name' => 'テスト 患者',
+                'name' => 'テスト 顧客',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'phone' => null,
             ]
         );
-        $patient->assignRole($role);
+        $customer->assignRole($role);
 
-        // Create additional random patients
+        // Create additional random customers
         User::factory()
             ->count(50)
             ->create()

@@ -16,7 +16,7 @@ class ContractSeeder extends Seeder
     public function run(): void
     {
         $clinic = Clinic::first();
-        $users = User::role('patient')->get();
+        $users = User::role('customer')->get();
         // コース料理（チケット付き）のメニューのみを選択する
         $menus = Menu::whereNotNull('num_tickets')->where('num_tickets', '>', 1)->get();
 

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Clinic;
-use App\Models\Machine;
+
 use App\Models\Menu;
 use App\Models\Product;
 use App\Models\Room;
@@ -20,17 +20,6 @@ class MasterDataSeeder extends Seeder
         if (!$clinic) {
             $clinic = Clinic::factory()->create();
         }
-
-        // Create Machines (Ensure at least one of each type exists)
-        $machineTypes = ['laser', 'hifu'];
-        foreach ($machineTypes as $type) {
-            Machine::factory()->create([
-                'clinic_id' => $clinic->id,
-                'type' => $type,
-            ]);
-        }
-        // Create some random extra machines
-        Machine::factory()->count(3)->create(['clinic_id' => $clinic->id]);
 
         // Create Menus
         // Menu::factory()->count(10)->create();

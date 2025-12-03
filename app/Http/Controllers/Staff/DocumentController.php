@@ -16,10 +16,10 @@ class DocumentController extends Controller
     private function getAvailableVariables()
     {
         return [
-            ['key' => 'patient_name', 'label' => '患者名', 'description' => '患者の氏名'],
-            ['key' => 'patient_id', 'label' => '診察券番号', 'description' => '患者の診察券番号'],
+            ['key' => 'customer_name', 'label' => '顧客名', 'description' => '顧客の氏名'],
+            ['key' => 'customer_id', 'label' => '顧客ID', 'description' => '顧客のID'],
             ['key' => 'current_date', 'label' => '作成日', 'description' => '書類作成日（今日の日付）'],
-            ['key' => 'clinic_name', 'label' => 'クリニック名', 'description' => 'クリニックの名称'],
+            ['key' => 'clinic_name', 'label' => 'サロン名', 'description' => 'サロンの名称'],
             ['key' => 'staff_name', 'label' => '担当スタッフ', 'description' => '担当スタッフの氏名'],
         ];
     }
@@ -92,10 +92,10 @@ class DocumentController extends Controller
         
         $replacedTemplates = $templates->map(function ($template) use ($user) {
             $content = $template->content;
-            $content = str_replace('{{ patient_name }}', $user->name, $content);
-            $content = str_replace('{{ patient_id }}', $user->id, $content); // 診察券番号があればそれを使う
+            $content = str_replace('{{ customer_name }}', $user->name, $content);
+            $content = str_replace('{{ customer_id }}', $user->id, $content);
             $content = str_replace('{{ current_date }}', now()->format('Y年m月d日'), $content);
-            $content = str_replace('{{ clinic_name }}', config('app.name', 'Clinic CRM'), $content);
+            $content = str_replace('{{ clinic_name }}', config('app.name', 'Hair Salon CRM'), $content);
             $content = str_replace('{{ staff_name }}', Auth::guard('staff')->user()->name ?? '担当者', $content);
             
             $template->content = $content;

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Consumable;
-use App\Models\Medicine;
 use App\Models\Menu;
 use Illuminate\Database\Seeder;
 
@@ -22,30 +21,18 @@ class MenuItemSeeder extends Seeder
             $menus = Menu::all();
         }
 
-        // 薬剤と消耗品を取得
-        $medicines = Medicine::all();
+        // 消耗品を取得
         $consumables = Consumable::all();
 
-        if ($medicines->isEmpty() || $consumables->isEmpty()) {
-            $this->call(MedicineAndConsumableSeeder::class);
-            $medicines = Medicine::all();
+        if ($consumables->isEmpty()) {
+            $this->call(ConsumableSeeder::class);
             $consumables = Consumable::all();
         }
 
-        // 各メニューにランダムに薬剤と消耗品を紐付け
+        // 各メニューにランダムに消耗品を紐付け
         foreach ($menus as $menu) {
             // 既存の紐付けをクリア
             $menu->items()->delete();
-
-            // 薬剤を1-2個紐付け
-            $randomMedicines = $medicines->random(min(2, $medicines->count()));
-            foreach ($randomMedicines as $medicine) {
-                $menu->items()->create([
-                    'item_id' => $medicine->id,
-                    'item_type' => Medicine::class,
-                    'quantity' => rand(1, 5),
-                ]);
-            }
 
             // 消耗品を1-3個紐付け
             $randomConsumables = $consumables->random(min(3, $consumables->count()));
