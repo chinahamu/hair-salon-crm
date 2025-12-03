@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Menu extends Model
+{
+    use HasFactory;
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'duration_minutes',
+        'required_role',
+        'required_room_type',
+        'required_machine_id',
+        'num_tickets',
+        'validity_period_days',
+        'is_active',
+        'campaign_flag',
+        'publish_start_at',
+        'publish_end_at',
+    ];
+
+    protected $casts = [
+        'campaign_flag' => 'boolean',
+        'publish_start_at' => 'datetime',
+        'publish_end_at' => 'datetime',
+    ];
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function requiredMachine()
+    {
+        return $this->belongsTo(Machine::class, 'required_machine_id');
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'menu_product');
+    }
+
+    public function items()
+    {
+        return $this->hasMany(MenuItem::class);
+    }
+}
