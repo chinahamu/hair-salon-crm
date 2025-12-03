@@ -22,7 +22,7 @@ class MenuController extends Controller
         return Inertia::render('Staff/Menus/Create', [
             'products' => Product::where('is_active', true)->get(),
             'roomTypes' => \App\Models\Room::select('type')->distinct()->whereNotNull('type')->pluck('type'),
-            'machines' => \App\Models\Machine::where('is_active', true)->get(),
+
             'roles' => \Spatie\Permission\Models\Role::where('guard_name', 'staff')->pluck('name'),
             'medicines' => \App\Models\Medicine::all(),
             'consumables' => \App\Models\Consumable::all(),
@@ -37,7 +37,7 @@ class MenuController extends Controller
             'duration_minutes' => 'required|integer',
             'required_role' => 'nullable|string|exists:roles,name',
             'required_room_type' => 'nullable|string',
-            'required_machine_id' => 'nullable|exists:machines,id',
+
             'num_tickets' => 'nullable|integer|min:1',
             'validity_period_days' => 'nullable|integer|min:1',
             'campaign_flag' => 'boolean',
@@ -91,7 +91,7 @@ class MenuController extends Controller
             'menuItems' => $menuItems,
             'products' => Product::where('is_active', true)->get(),
             'roomTypes' => \App\Models\Room::select('type')->distinct()->whereNotNull('type')->pluck('type'),
-            'machines' => \App\Models\Machine::where('is_active', true)->get(),
+
             'roles' => \Spatie\Permission\Models\Role::where('guard_name', 'staff')->pluck('name'),
             'medicines' => \App\Models\Medicine::all(),
             'consumables' => \App\Models\Consumable::all(),
@@ -106,7 +106,7 @@ class MenuController extends Controller
             'duration_minutes' => 'required|integer',
             'required_role' => 'nullable|string|exists:roles,name',
             'required_room_type' => 'nullable|string',
-            'required_machine_id' => 'nullable|exists:machines,id',
+
             'num_tickets' => 'nullable|integer|min:1',
             'validity_period_days' => 'nullable|integer|min:1',
             'campaign_flag' => 'boolean',

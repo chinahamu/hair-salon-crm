@@ -18,7 +18,7 @@ class ClinicSeeder extends Seeder
     {
         // Create Clinic
         $clinic = Clinic::firstOrCreate([
-            'name' => '東京本院',
+            'name' => 'Hair Salon Tokyo',
         ], [
             'address' => '東京都渋谷区...',
             'phone' => '03-1234-5678',

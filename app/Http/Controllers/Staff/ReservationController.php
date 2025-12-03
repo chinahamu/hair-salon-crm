@@ -29,7 +29,7 @@ class ReservationController extends Controller
             $end = Carbon::today()->addDays(6);
         }
 
-        $query = Reservation::with(['user', 'menu.items.item', 'staff', 'room', 'machine', 'items.item'])
+        $query = Reservation::with(['user', 'menu.items.item', 'staff', 'room', 'items.item'])
             ->whereBetween('start_time', [$start, $end]);
 
         if ($request->filled('patient_id')) {
@@ -69,7 +69,7 @@ class ReservationController extends Controller
                     'menu_name' => $reservation->menu->name,
                     'staff_name' => $reservation->staff ? $reservation->staff->name : '未定',
                     'room_name' => $reservation->room ? $reservation->room->name : '未定',
-                    'machine_name' => $reservation->machine ? $reservation->machine->name : 'なし',
+
                     'status' => $reservation->status,
                     'reception_status' => $reservation->reception_status,
                     'default_items' => $defaultItems,

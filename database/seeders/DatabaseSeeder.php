@@ -23,15 +23,16 @@ class DatabaseSeeder extends Seeder
             MasterDataSeeder::class,
             StaffSeeder::class,
             CustomerSeeder::class,
-            ContractSeeder::class,
-            DocumentTemplateSeeder::class,
-            ReservationSeeder::class,
-            ShiftSeeder::class,
             // 追加シーダー
             \Database\Seeders\ClinicRoleSeeder::class,
             MenuSeeder::class,
             ConsumableSeeder::class,
             MenuItemSeeder::class,
+            // Depend on Menus and Customers
+            ContractSeeder::class,
+            DocumentTemplateSeeder::class,
+            ReservationSeeder::class,
+            ShiftSeeder::class,
         ]);
     }
 }

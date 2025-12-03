@@ -61,6 +61,16 @@ class MenuSeeder extends Seeder
                 'required_role' => 'stylist',
                 'required_room_type' => 'seat',
             ],
+            [
+                'name' => 'ヘッドスパ 5回券',
+                'description' => 'お得な回数券',
+                'price' => 30000,
+                'duration_minutes' => 45,
+                'required_role' => 'assistant',
+                'required_room_type' => 'shampoo',
+                'num_tickets' => 5,
+                'validity_period_days' => 180,
+            ],
         ];
 
         foreach ($menus as $menuData) {

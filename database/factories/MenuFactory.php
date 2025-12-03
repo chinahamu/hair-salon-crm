@@ -26,7 +26,7 @@ class MenuFactory extends Factory
                 'name' => '医療脱毛（全身）',
                 'required_role' => 'nurse',
                 'required_room_type' => 'treatment',
-                'required_machine_type' => 'laser',
+
                 'duration_minutes' => 120,
                 'price' => 50000,
             ],
@@ -34,7 +34,7 @@ class MenuFactory extends Factory
                 'name' => 'カウンセリング',
                 'required_role' => 'counselor',
                 'required_room_type' => 'counseling',
-                'required_machine_type' => null,
+
                 'duration_minutes' => 60,
                 'price' => 0,
             ],
@@ -42,7 +42,7 @@ class MenuFactory extends Factory
                 'name' => '医師診察',
                 'required_role' => 'doctor',
                 'required_room_type' => 'consultation',
-                'required_machine_type' => null,
+
                 'duration_minutes' => 30,
                 'price' => 3000,
             ],
@@ -50,7 +50,7 @@ class MenuFactory extends Factory
                 'name' => 'HIFU全顔',
                 'required_role' => 'nurse',
                 'required_room_type' => 'treatment',
-                'required_machine_type' => 'hifu',
+
                 'duration_minutes' => 60,
                 'price' => 30000,
             ],
@@ -58,7 +58,7 @@ class MenuFactory extends Factory
                 'name' => '全身脱毛 5回コース',
                 'required_role' => 'nurse',
                 'required_room_type' => 'treatment',
-                'required_machine_type' => 'laser',
+
                 'duration_minutes' => 120,
                 'price' => 200000,
                 'num_tickets' => 5,
@@ -68,7 +68,7 @@ class MenuFactory extends Factory
                 'name' => 'フェイシャル 10回コース',
                 'required_role' => 'nurse',
                 'required_room_type' => 'treatment',
-                'required_machine_type' => null,
+
                 'duration_minutes' => 60,
                 'price' => 80000,
                 'num_tickets' => 10,
@@ -78,7 +78,7 @@ class MenuFactory extends Factory
                 'name' => '【期間限定】春の美肌キャンペーン',
                 'required_role' => 'nurse',
                 'required_room_type' => 'treatment',
-                'required_machine_type' => 'laser',
+
                 'duration_minutes' => 90,
                 'price' => 15000,
                 'campaign_flag' => true,
@@ -89,11 +89,7 @@ class MenuFactory extends Factory
 
         $selected = $ja->randomElement($menuTypes);
 
-        $machineId = null;
-        if ($selected['required_machine_type']) {
-            $machine = \App\Models\Machine::where('type', $selected['required_machine_type'])->inRandomOrder()->first();
-            $machineId = $machine ? $machine->id : null;
-        }
+
 
         return [
             'name' => $selected['name'],
@@ -102,7 +98,7 @@ class MenuFactory extends Factory
             'duration_minutes' => $selected['duration_minutes'],
             'required_role' => $selected['required_role'],
             'required_room_type' => $selected['required_room_type'],
-            'required_machine_id' => $machineId,
+
             'num_tickets' => $selected['num_tickets'] ?? null,
             'validity_period_days' => $selected['validity_period_days'] ?? null,
             'campaign_flag' => $selected['campaign_flag'] ?? false,

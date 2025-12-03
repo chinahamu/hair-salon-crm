@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Clinic;
-use App\Models\Machine;
+
 use App\Models\Menu;
 use App\Models\Room;
 use App\Models\Staff;
@@ -32,7 +32,7 @@ class ReservationFactory extends Factory
             'menu_id' => Menu::factory(),
             'staff_id' => Staff::factory(),
             'room_id' => Room::factory(),
-            'machine_id' => Machine::factory(),
+
             'clinic_id' => Clinic::factory(),
             'start_time' => $startTime,
             'end_time' => $endTime,

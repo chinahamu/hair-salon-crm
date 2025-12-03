@@ -7,7 +7,7 @@ use App\Models\Menu;
 use App\Models\Reservation;
 use App\Models\Shift;
 use App\Models\Room;
-use App\Models\Machine;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Carbon\Carbon;
@@ -156,28 +156,7 @@ class PatientReservationController extends Controller
             return false;
         }
 
-        // Check Machine Availability
-        $machineId = $menu->required_machine_id;
-        if ($machineId) {
-             $machine = Machine::find($machineId);
-             if (!$machine) {
-                 return false;
-             }
-             $totalMachines = $machine->quantity;
-             
-             $busyMachines = Reservation::where('clinic_id', $clinicId)
-             ->where('machine_id', $machineId)
-             ->where(function ($query) use ($start, $end) {
-                $query->where('start_time', '<', $end)
-                      ->where('end_time', '>', $start);
-            })
-            ->where('status', '!=', 'cancelled')
-            ->count();
 
-            if ($busyMachines >= $totalMachines) {
-                return false;
-            }
-        }
 
         return true;
     }
@@ -258,12 +237,7 @@ class PatientReservationController extends Controller
             }
         }
 
-        // Find Machine
-        $machineId = null;
-        if ($menu->required_machine_id) {
-            $machineId = $menu->required_machine_id;
-            // Availability already checked in isSlotAvailable
-        }
+
 
         $reservation = Reservation::create([
             'clinic_id' => $clinic->id,
@@ -271,7 +245,7 @@ class PatientReservationController extends Controller
             'menu_id' => $menu->id,
             'staff_id' => $staffId,
             'room_id' => $roomId,
-            'machine_id' => $machineId,
+
             'start_time' => $startDateTime,
             'end_time' => $endDateTime,
             'status' => 'confirmed', // or pending
