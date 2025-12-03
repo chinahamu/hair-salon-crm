@@ -55,8 +55,8 @@ export default function Index({ staffMembers }) {
                                             <div className="text-xs text-gray-500">{member.email}</div>
                                         </div>
                                     </div>
-                                    <Link 
-                                        href={route('staff.members.edit', member.id)} 
+                                    <Link
+                                        href={route('staff.members.edit', member.id)}
                                         className="text-primary-600 hover:text-primary-900 transition-colors inline-flex items-center text-xs"
                                     >
                                         <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -109,7 +109,7 @@ export default function Index({ staffMembers }) {
                                         役割
                                     </th>
                                     <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                        所属クリニック
+                                        所属店舗
                                     </th>
                                     <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
                                         操作
@@ -154,8 +154,8 @@ export default function Index({ staffMembers }) {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <Link 
-                                                href={route('staff.members.edit', member.id)} 
+                                            <Link
+                                                href={route('staff.members.edit', member.id)}
                                                 className="text-primary-600 hover:text-primary-900 transition-colors inline-flex items-center"
                                             >
                                                 <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

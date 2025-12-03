@@ -36,7 +36,7 @@ class ServiceManagementTest extends TestCase
         ]);
     }
 
-    public function test_can_purchase_contract_for_patient()
+    public function test_can_purchase_contract_for_customer()
     {
         $staff = Staff::factory()->create();
         $clinic = Clinic::factory()->create();
@@ -52,7 +52,7 @@ class ServiceManagementTest extends TestCase
 
         $this->actingAs($staff, 'staff');
 
-        $response = $this->post(route('staff.patients.contracts.store', $patient->id), [
+        $response = $this->post(route('staff.customers.contracts.store', $patient->id), [
             'menu_id' => $menu->id,
             'contract_date' => now()->toDateString(),
         ]);

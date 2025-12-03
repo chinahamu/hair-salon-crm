@@ -18,22 +18,22 @@ export default function Create({ auth }) {
     return (
         <StaffLayout
             user={auth.user}
-            header="部屋登録"
+            header="設備登録"
         >
-            <Head title="部屋登録" />
+            <Head title="設備登録" />
 
             <div className="max-w-2xl mx-auto">
                 <div className="bg-white shadow-sm rounded-2xl border border-gray-100 overflow-hidden">
                     <div className="p-6 border-b border-gray-100 bg-gray-50/50">
-                        <h3 className="text-lg font-bold text-gray-900">新しい部屋を登録</h3>
-                        <p className="text-sm text-gray-500 mt-1">施術室やカウンセリングルームなどの情報を入力してください。</p>
+                        <h3 className="text-lg font-bold text-gray-900">新しい設備を登録</h3>
+                        <p className="text-sm text-gray-500 mt-1">セット面やシャンプー台などの情報を入力してください。</p>
                     </div>
-                    
+
                     <div className="p-6">
                         <form onSubmit={submit} className="space-y-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="name">
-                                    部屋名 <span className="text-red-500">*</span>
+                                    設備名 <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     id="name"
@@ -41,7 +41,7 @@ export default function Create({ auth }) {
                                     className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm transition duration-150 ease-in-out"
                                     value={data.name}
                                     onChange={(e) => setData('name', e.target.value)}
-                                    placeholder="例: 施術室A"
+                                    placeholder="例: セット面A"
                                     required
                                 />
                                 {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
@@ -58,7 +58,7 @@ export default function Create({ auth }) {
                                         className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm transition duration-150 ease-in-out"
                                         value={data.type}
                                         onChange={(e) => setData('type', e.target.value)}
-                                        placeholder="例: 施術室"
+                                        placeholder="例: セット面"
                                     />
                                     {errors.type && <p className="mt-1 text-sm text-red-600">{errors.type}</p>}
                                 </div>
@@ -89,7 +89,7 @@ export default function Create({ auth }) {
                                     onChange={(e) => setData('is_active', e.target.checked)}
                                 />
                                 <label htmlFor="is_active" className="ml-2 block text-sm text-gray-900">
-                                    この部屋を有効にする
+                                    この設備を有効にする
                                 </label>
                             </div>
 

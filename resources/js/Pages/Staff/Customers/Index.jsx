@@ -8,13 +8,13 @@ export default function Index({ patients }) {
     return (
         <StaffLayout
             user={auth.user}
-            header="患者管理"
+            header="顧客管理"
         >
-            <Head title="患者管理" />
+            <Head title="顧客管理" />
 
             <div className="space-y-4 lg:space-y-6">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                    <h2 className="text-lg font-bold text-gray-900">患者一覧</h2>
+                    <h2 className="text-lg font-bold text-gray-900">顧客一覧</h2>
                     {/* 必要であれば新規登録ボタンなどをここに配置 */}
                 </div>
 
@@ -46,8 +46,8 @@ export default function Index({ patients }) {
                                                 正常
                                             </span>
                                         )}
-                                        <Link 
-                                            href={route('staff.patients.show', patient.id)} 
+                                        <Link
+                                            href={route('staff.customers.show', patient.id)}
                                             className="text-primary-600 hover:text-primary-900 font-bold text-xs"
                                         >
                                             詳細 →
@@ -58,7 +58,7 @@ export default function Index({ patients }) {
                         ))}
                         {patients.data.length === 0 && (
                             <div className="p-8 text-center text-gray-500">
-                                <p>登録されている患者はいません</p>
+                                <p>登録されている顧客はいません</p>
                             </div>
                         )}
                     </div>
@@ -115,8 +115,8 @@ export default function Index({ patients }) {
                                             )}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <Link 
-                                                href={route('staff.patients.show', patient.id)} 
+                                            <Link
+                                                href={route('staff.customers.show', patient.id)}
                                                 className="text-primary-600 hover:text-primary-900 font-bold hover:underline"
                                             >
                                                 詳細

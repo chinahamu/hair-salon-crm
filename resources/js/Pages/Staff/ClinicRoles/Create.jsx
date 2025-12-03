@@ -17,9 +17,9 @@ export default function Create({ auth, clinics, roles }) {
     return (
         <StaffLayout
             user={auth.user}
-            header="クリニック別ロール登録"
+            header="店舗別ロール登録"
         >
-            <Head title="クリニック別ロール登録" />
+            <Head title="店舗別ロール登録" />
 
             <div className="max-w-4xl mx-auto">
                 <div className="bg-white overflow-hidden shadow-sm rounded-2xl border border-gray-100">
@@ -31,16 +31,16 @@ export default function Create({ auth, clinics, roles }) {
                             新規ロール割り当て
                         </h3>
                         <p className="mt-1 text-sm text-gray-500">
-                            特定のクリニックに対して、新しいロール定義を作成します。
+                            特定の店舗に対して、新しいロール定義を作成します。
                         </p>
                     </div>
 
                     <form onSubmit={submit} className="p-6 space-y-6">
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                            {/* クリニック選択 */}
+                            {/* 店舗選択 */}
                             <div>
                                 <label htmlFor="clinic_id" className="block text-sm font-medium text-gray-700 mb-1">
-                                    クリニック <span className="text-red-500">*</span>
+                                    店舗 <span className="text-red-500">*</span>
                                 </label>
                                 <select
                                     id="clinic_id"
@@ -86,7 +86,7 @@ export default function Create({ auth, clinics, roles }) {
                                     value={data.label}
                                     onChange={(e) => setData('label', e.target.value)}
                                     className="w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500 shadow-sm transition-colors"
-                                    placeholder="例: 院長、受付リーダーなど"
+                                    placeholder="例: 店長、受付リーダーなど"
                                 />
                                 <p className="mt-1 text-xs text-gray-500">
                                     画面上で表示される役職名などを入力してください。

@@ -155,12 +155,12 @@ export default function StaffLayout({ user, header, children }) {
                 管理
             </div>
             <Link
-                href={route('staff.patients.index')}
+                href={route('staff.customers.index')}
                 onClick={() => setSidebarOpen(false)}
-                className={navLinkClass(route().current('staff.patients.*'))}
+                className={navLinkClass(route().current('staff.customers.*'))}
             >
-                <UsersIcon className={iconClass(route().current('staff.patients.*'))} />
-                患者管理
+                <UsersIcon className={iconClass(route().current('staff.customers.*'))} />
+                顧客管理
             </Link>
             <Link
                 href={route('staff.members.index')}
@@ -190,16 +190,7 @@ export default function StaffLayout({ user, header, children }) {
             <div className="px-4 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                 在庫・物品
             </div>
-            <Link
-                href={route('staff.medicines.index')}
-                onClick={() => setSidebarOpen(false)}
-                className={navLinkClass(route().current('staff.medicines.*'))}
-            >
-                <svg className={iconClass(route().current('staff.medicines.*'))} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                </svg>
-                薬剤管理
-            </Link>
+
             <Link
                 href={route('staff.consumables.index')}
                 onClick={() => setSidebarOpen(false)}
@@ -224,7 +215,7 @@ export default function StaffLayout({ user, header, children }) {
             <div className="px-4 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                 システム
             </div>
-            {/* クリニック別ロール管理（HQ またはクリニック所属スタッフに表示） */}
+            {/* 店舗別ロール管理（HQ または店舗所属スタッフに表示） */}
             {user && ((user.roles && user.roles.some(r => r.name === 'hq')) || user.clinic_id) && (
                 <Link
                     href={route('staff.clinic-roles.index')}
@@ -232,7 +223,7 @@ export default function StaffLayout({ user, header, children }) {
                     className={navLinkClass(route().current('staff.clinic-roles.*'))}
                 >
                     <KeyIcon className={iconClass(route().current('staff.clinic-roles.*'))} />
-                    クリニック別ロール
+                    店舗別ロール
                 </Link>
             )}
             <Link
@@ -249,16 +240,9 @@ export default function StaffLayout({ user, header, children }) {
                 className={navLinkClass(route().current('staff.rooms.*'))}
             >
                 <OfficeBuildingIcon className={iconClass(route().current('staff.rooms.*'))} />
-                部屋管理
+                設備管理
             </Link>
-            <Link
-                href={route('staff.machines.index')}
-                onClick={() => setSidebarOpen(false)}
-                className={navLinkClass(route().current('staff.machines.*'))}
-            >
-                <ChipIcon className={iconClass(route().current('staff.machines.*'))} />
-                機器管理
-            </Link>
+
             <Link
                 href={route('staff.audit-logs.index')}
                 onClick={() => setSidebarOpen(false)}
@@ -273,7 +257,7 @@ export default function StaffLayout({ user, header, children }) {
                 className={navLinkClass(route().current('staff.settings.clinic.*'))}
             >
                 <OfficeBuildingIcon className={iconClass(route().current('staff.settings.clinic.*'))} />
-                クリニック設定
+                店舗設定
             </Link>
         </>
     );
@@ -321,7 +305,7 @@ export default function StaffLayout({ user, header, children }) {
                             <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
                                 S
                             </div>
-                            <span className="font-bold text-lg text-gray-800 tracking-tight">Clinic CRM</span>
+                            <span className="font-bold text-lg text-gray-800 tracking-tight">Hair Salon CRM</span>
                         </Link>
                         <button
                             onClick={() => setSidebarOpen(false)}
@@ -345,7 +329,7 @@ export default function StaffLayout({ user, header, children }) {
                             <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
                                 S
                             </div>
-                            <span className="font-bold text-xl text-gray-800 tracking-tight">Clinic CRM <span className="text-xs font-normal text-gray-500 ml-1">Staff</span></span>
+                            <span className="font-bold text-xl text-gray-800 tracking-tight">Hair Salon CRM <span className="text-xs font-normal text-gray-500 ml-1">Staff</span></span>
                         </Link>
                     </div>
                     <div className="flex-1 overflow-y-auto py-6 px-4 space-y-1">

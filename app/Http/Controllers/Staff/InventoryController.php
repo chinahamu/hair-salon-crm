@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
-use App\Models\Medicine;
+
 use App\Models\Consumable;
 use App\Models\Stock;
 use Illuminate\Http\Request;
@@ -13,16 +13,7 @@ class InventoryController extends Controller
 {
     public function index()
     {
-        $medicines = Medicine::with('stock')->get()->map(function ($medicine) {
-            return [
-                'id' => $medicine->id,
-                'name' => $medicine->name,
-                'type' => 'medicine',
-                'type_label' => '薬剤',
-                'unit' => $medicine->unit,
-                'stock' => $medicine->stock ? $medicine->stock->quantity : 0,
-            ];
-        });
+
 
         $consumables = Consumable::with('stock')->get()->map(function ($consumable) {
             return [
@@ -35,7 +26,7 @@ class InventoryController extends Controller
             ];
         });
 
-        $items = $medicines->concat($consumables);
+        $items = $consumables;
 
         return Inertia::render('Staff/Inventories/Index', [
             'items' => $items,
@@ -44,15 +35,12 @@ class InventoryController extends Controller
 
     public function create()
     {
-        $medicines = Medicine::all()->map(function ($m) {
-            return ['id' => $m->id, 'name' => $m->name, 'type' => 'medicine'];
-        });
+
         $consumables = Consumable::all()->map(function ($c) {
             return ['id' => $c->id, 'name' => $c->name, 'type' => 'consumable'];
         });
 
         return Inertia::render('Staff/Inventories/Create', [
-            'medicines' => $medicines,
             'consumables' => $consumables,
         ]);
     }
@@ -60,13 +48,13 @@ class InventoryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'item_type' => 'required|in:medicine,consumable',
+            'item_type' => 'required|in:consumable',
             'item_id' => 'required|integer',
             'quantity' => 'required|integer',
             'operation' => 'required|in:add,subtract,set',
         ]);
 
-        $modelClass = $validated['item_type'] === 'medicine' ? Medicine::class : Consumable::class;
+        $modelClass = Consumable::class;
         $item = $modelClass::findOrFail($validated['item_id']);
 
         $stock = $item->stock()->firstOrCreate([], ['quantity' => 0]);

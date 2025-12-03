@@ -48,8 +48,7 @@ export default function Index({ items }) {
                                 <div className="flex items-start justify-between">
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2 mb-1">
-                                            <span className={`px-2 py-0.5 rounded text-xs font-medium ${item.type === 'medicine' ? 'bg-blue-50 text-blue-700' : 'bg-green-50 text-green-700'
-                                                }`}>
+                                            <span className="px-2 py-0.5 rounded text-xs font-medium bg-green-50 text-green-700">
                                                 {item.type_label}
                                             </span>
                                         </div>
@@ -97,8 +96,7 @@ export default function Index({ items }) {
                                 {items.map((item) => (
                                     <tr key={`${item.type}-${item.id}`} className="hover:bg-gray-50/50 transition-colors duration-150">
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${item.type === 'medicine' ? 'bg-blue-50 text-blue-700' : 'bg-green-50 text-green-700'
-                                                }`}>
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700">
                                                 {item.type_label}
                                             </span>
                                         </td>

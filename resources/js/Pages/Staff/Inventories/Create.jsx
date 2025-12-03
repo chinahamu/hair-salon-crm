@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 import StaffLayout from '@/Layouts/StaffLayout';
 
-export default function Create({ auth, medicines, consumables }) {
+export default function Create({ auth, consumables }) {
     const { data, setData, post, processing, errors } = useForm({
-        item_type: 'medicine',
+        item_type: 'consumable',
         item_id: '',
         quantity: '',
         operation: 'add',
@@ -13,13 +13,9 @@ export default function Create({ auth, medicines, consumables }) {
     const [selectedItems, setSelectedItems] = useState([]);
 
     useEffect(() => {
-        if (data.item_type === 'medicine') {
-            setSelectedItems(medicines);
-        } else {
-            setSelectedItems(consumables);
-        }
+        setSelectedItems(consumables);
         setData('item_id', '');
-    }, [data.item_type]);
+    }, []);
 
     const submit = (e) => {
         e.preventDefault();
@@ -46,37 +42,8 @@ export default function Create({ auth, medicines, consumables }) {
 
                     <form onSubmit={submit} className="p-6 space-y-6">
                         <div className="grid grid-cols-1 gap-6">
-                            {/* 種別選択 */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    種別 <span className="text-red-500">*</span>
-                                </label>
-                                <div className="flex gap-4">
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="item_type"
-                                            value="medicine"
-                                            checked={data.item_type === 'medicine'}
-                                            onChange={(e) => setData('item_type', e.target.value)}
-                                            className="text-primary-600 focus:ring-primary-500 border-gray-300"
-                                        />
-                                        <span className="text-sm text-gray-700">薬剤</span>
-                                    </label>
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="item_type"
-                                            value="consumable"
-                                            checked={data.item_type === 'consumable'}
-                                            onChange={(e) => setData('item_type', e.target.value)}
-                                            className="text-primary-600 focus:ring-primary-500 border-gray-300"
-                                        />
-                                        <span className="text-sm text-gray-700">消耗品</span>
-                                    </label>
-                                </div>
-                                {errors.item_type && <div className="mt-1 text-sm text-red-600">{errors.item_type}</div>}
-                            </div>
+                            {/* 種別選択 (消耗品のみ) */}
+                            <input type="hidden" name="item_type" value="consumable" />
 
                             {/* アイテム選択 */}
                             <div>

@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class PatientController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class PatientController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return Inertia::render('Staff/Patients/Index', [
+        return Inertia::render('Staff/Customers/Index', [
             'patients' => $patients,
         ]);
     }
@@ -36,7 +36,7 @@ class PatientController extends Controller
         $patient->load(['contracts.menu', 'signedDocuments.documentTemplate']);
         $menus = \App\Models\Menu::where('is_active', true)->get();
 
-        return Inertia::render('Staff/Patients/Show', [
+        return Inertia::render('Staff/Customers/Show', [
             'patient' => $patient,
             'menus' => $menus,
         ]);
@@ -47,7 +47,7 @@ class PatientController extends Controller
      */
     public function edit(User $patient)
     {
-        return Inertia::render('Staff/Patients/Edit', [
+        return Inertia::render('Staff/Customers/Edit', [
             'patient' => $patient,
         ]);
     }
@@ -72,7 +72,7 @@ class PatientController extends Controller
 
         $patient->update($validated);
 
-        return redirect()->route('staff.patients.show', $patient)
+        return redirect()->route('staff.customers.show', $patient)
             ->with('success', '顧客情報を更新しました。');
     }
 }

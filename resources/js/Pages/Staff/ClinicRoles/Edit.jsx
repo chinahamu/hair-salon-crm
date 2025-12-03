@@ -17,9 +17,9 @@ export default function Edit({ auth, clinicRole, clinics, roles }) {
     return (
         <StaffLayout
             user={auth.user}
-            header="クリニック別ロール編集"
+            header="店舗別ロール編集"
         >
-            <Head title="クリニック別ロール編集" />
+            <Head title="店舗別ロール編集" />
 
             <div className="max-w-4xl mx-auto">
                 <div className="bg-white overflow-hidden shadow-sm rounded-2xl border border-gray-100">
@@ -31,16 +31,16 @@ export default function Edit({ auth, clinicRole, clinics, roles }) {
                             ロール情報の編集
                         </h3>
                         <p className="mt-1 text-sm text-gray-500">
-                            登録済みのクリニック別ロール情報を更新します。
+                            登録済みの店舗別ロール情報を更新します。
                         </p>
                     </div>
 
                     <form onSubmit={submit} className="p-6 space-y-6">
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                            {/* クリニック選択 */}
+                            {/* 店舗選択 */}
                             <div>
                                 <label htmlFor="clinic_id" className="block text-sm font-medium text-gray-700 mb-1">
-                                    クリニック <span className="text-red-500">*</span>
+                                    店舗 <span className="text-red-500">*</span>
                                 </label>
                                 <select
                                     id="clinic_id"

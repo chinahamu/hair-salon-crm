@@ -18,22 +18,22 @@ export default function Edit({ auth, room }) {
     return (
         <StaffLayout
             user={auth.user}
-            header="部屋編集"
+            header="設備編集"
         >
-            <Head title="部屋編集" />
+            <Head title="設備編集" />
 
             <div className="max-w-2xl mx-auto">
                 <div className="bg-white shadow-sm rounded-2xl border border-gray-100 overflow-hidden">
                     <div className="p-6 border-b border-gray-100 bg-gray-50/50">
-                        <h3 className="text-lg font-bold text-gray-900">部屋情報を編集</h3>
-                        <p className="text-sm text-gray-500 mt-1">部屋の名前や定員などを変更できます。</p>
+                        <h3 className="text-lg font-bold text-gray-900">設備情報を編集</h3>
+                        <p className="text-sm text-gray-500 mt-1">設備の名前や定員などを変更できます。</p>
                     </div>
-                    
+
                     <div className="p-6">
                         <form onSubmit={submit} className="space-y-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="name">
-                                    部屋名 <span className="text-red-500">*</span>
+                                    設備名 <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     id="name"
@@ -87,7 +87,7 @@ export default function Edit({ auth, room }) {
                                     onChange={(e) => setData('is_active', e.target.checked)}
                                 />
                                 <label htmlFor="is_active" className="ml-2 block text-sm text-gray-900">
-                                    この部屋を有効にする
+                                    この設備を有効にする
                                 </label>
                             </div>
 

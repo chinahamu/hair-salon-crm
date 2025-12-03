@@ -8,9 +8,9 @@ export default function Index({ auth, rooms }) {
     return (
         <StaffLayout
             user={auth.user}
-            header="部屋管理"
+            header="設備管理"
         >
-            <Head title="部屋管理" />
+            <Head title="設備管理" />
 
             <div className="space-y-4 lg:space-y-6">
                 {flash.success && (
@@ -28,7 +28,7 @@ export default function Index({ auth, rooms }) {
                             <svg className="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                             </svg>
-                            部屋一覧
+                            設備一覧
                         </h3>
                         <Link
                             href={route('staff.rooms.create')}
@@ -49,11 +49,10 @@ export default function Index({ auth, rooms }) {
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2">
                                             <div className="text-sm font-bold text-gray-900">{room.name}</div>
-                                            <span className={`px-2 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full border ${
-                                                room.is_active 
-                                                    ? 'bg-green-50 text-green-700 border-green-100' 
-                                                    : 'bg-gray-100 text-gray-600 border-gray-200'
-                                            }`}>
+                                            <span className={`px-2 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full border ${room.is_active
+                                                ? 'bg-green-50 text-green-700 border-green-100'
+                                                : 'bg-gray-100 text-gray-600 border-gray-200'
+                                                }`}>
                                                 {room.is_active ? '有効' : '無効'}
                                             </span>
                                         </div>
@@ -93,7 +92,7 @@ export default function Index({ auth, rooms }) {
                                 <svg className="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>
-                                <p>登録されている部屋はありません</p>
+                                <p>登録されている設備（セット面・シャンプー台など）はありません</p>
                             </div>
                         )}
                     </div>
@@ -133,11 +132,10 @@ export default function Index({ auth, rooms }) {
                                             {room.capacity} <span className="text-xs text-gray-400">名</span>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <span className={`px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full border ${
-                                                room.is_active 
-                                                    ? 'bg-green-50 text-green-700 border-green-100' 
-                                                    : 'bg-gray-100 text-gray-600 border-gray-200'
-                                            }`}>
+                                            <span className={`px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full border ${room.is_active
+                                                ? 'bg-green-50 text-green-700 border-green-100'
+                                                : 'bg-gray-100 text-gray-600 border-gray-200'
+                                                }`}>
                                                 {room.is_active ? '有効' : '無効'}
                                             </span>
                                         </td>
@@ -175,7 +173,7 @@ export default function Index({ auth, rooms }) {
                                                 <svg className="w-12 h-12 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                                 </svg>
-                                                <p>登録されている部屋はありません</p>
+                                                <p>登録されている設備（セット面・シャンプー台など）はありません</p>
                                             </div>
                                         </td>
                                     </tr>

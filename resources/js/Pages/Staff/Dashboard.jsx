@@ -2,7 +2,7 @@ import React from 'react';
 import { Head, usePage, Link } from '@inertiajs/react';
 import StaffLayout from '@/Layouts/StaffLayout';
 
-export default function Dashboard({ today_reservations_count, today_schedule, low_stock_products, low_stock_medicines, low_stock_consumables }) {
+export default function Dashboard({ today_reservations_count, today_schedule, low_stock_products, low_stock_consumables }) {
     const { auth } = usePage().props;
 
     return (
@@ -26,7 +26,7 @@ export default function Dashboard({ today_reservations_count, today_schedule, lo
                             <div className="space-y-1 text-indigo-100 text-sm">
                                 <p>予約ページにて以下の情報でログインし、予約フローを確認できます。</p>
                                 <div className="flex flex-wrap gap-4 mt-2 font-mono bg-white/10 p-2 rounded-lg inline-flex">
-                                    <span>Email: <strong>patient@example.com</strong></span>
+                                    <span>Email: <strong>customer@example.com</strong></span>
                                     <span>Password: <strong>password</strong></span>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@ export default function Dashboard({ today_reservations_count, today_schedule, lo
                                 </svg>
                             </div>
                             <div className="ml-3 lg:ml-4">
-                                <p className="text-xs lg:text-sm font-medium text-gray-500">本日の来院予定</p>
+                                <p className="text-xs lg:text-sm font-medium text-gray-500">本日の来店予定</p>
                                 <p className="text-xl lg:text-2xl font-bold text-gray-900">{today_reservations_count} <span className="text-xs lg:text-sm font-normal text-gray-500">名</span></p>
                             </div>
                         </div>
@@ -65,7 +65,7 @@ export default function Dashboard({ today_reservations_count, today_schedule, lo
                 </div>
 
                 {/* 在庫警告 */}
-                {((low_stock_products && low_stock_products.length > 0) || (low_stock_medicines && low_stock_medicines.length > 0) || (low_stock_consumables && low_stock_consumables.length > 0)) && (
+                {((low_stock_products && low_stock_products.length > 0) || (low_stock_consumables && low_stock_consumables.length > 0)) && (
                     <div className="bg-red-50 border border-red-200 rounded-2xl p-4 lg:p-6">
                         <h3 className="text-lg font-bold text-red-800 flex items-center gap-2 mb-4">
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -91,23 +91,7 @@ export default function Dashboard({ today_reservations_count, today_schedule, lo
                                     </Link>
                                 </div>
                             ))}
-                            {low_stock_medicines && low_stock_medicines.map((medicine) => (
-                                <div key={`medicine-${medicine.id}`} className="bg-white p-4 rounded-xl shadow-sm border border-red-100 flex justify-between items-center">
-                                    <div>
-                                        <div className="font-bold text-gray-900">{medicine.name}</div>
-                                        <div className="text-xs text-gray-500 mb-1">薬剤</div>
-                                        <div className="text-sm text-red-600 font-bold">
-                                            残り: {medicine.stock ? medicine.stock.quantity : 0}{medicine.unit} <span className="text-xs text-gray-500 font-normal">(閾値: {medicine.alert_threshold})</span>
-                                        </div>
-                                    </div>
-                                    <Link
-                                        href={route('staff.medicines.edit', medicine.id)}
-                                        className="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full hover:bg-red-200 transition-colors"
-                                    >
-                                        補充
-                                    </Link>
-                                </div>
-                            ))}
+
                             {low_stock_consumables && low_stock_consumables.map((consumable) => (
                                 <div key={`consumable-${consumable.id}`} className="bg-white p-4 rounded-xl shadow-sm border border-red-100 flex justify-between items-center">
                                     <div>
@@ -132,7 +116,7 @@ export default function Dashboard({ today_reservations_count, today_schedule, lo
                 {/* 本日のスケジュール */}
                 <div className="bg-white overflow-hidden shadow-sm rounded-2xl border border-gray-100">
                     <div className="p-4 lg:p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                        <h3 className="text-lg font-bold text-gray-900">本日の施術スケジュール</h3>
+                        <h3 className="text-lg font-bold text-gray-900">本日の予約スケジュール</h3>
                         <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
                             {new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' })}
                         </span>
@@ -182,7 +166,7 @@ export default function Dashboard({ today_reservations_count, today_schedule, lo
                                         <thead className="bg-gray-50/50">
                                             <tr>
                                                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">時間</th>
-                                                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">患者名</th>
+                                                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">顧客名</th>
                                                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">メニュー</th>
                                                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">ステータス</th>
                                             </tr>

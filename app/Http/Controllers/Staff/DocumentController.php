@@ -149,6 +149,6 @@ class DocumentController extends Controller
             'user_agent' => $request->userAgent(),
         ]);
 
-        return redirect()->route('staff.patients.show', $user->id)->with('success', '署名を保存しました。');
+        return redirect()->route('staff.customers.show', $user->id)->with('success', '署名を保存しました。');
     }
 }

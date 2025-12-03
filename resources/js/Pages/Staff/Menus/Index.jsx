@@ -6,10 +6,10 @@ export default function Index({ menus }) {
     const { flash = {}, auth } = usePage().props;
 
     const roomTypeMap = {
-        'consultation': '診察室',
-        'treatment': '処置室',
-        'counseling': 'カウンセリングルーム',
-        'operating': '手術室',
+        'seat': 'セット面',
+        'shampoo': 'シャンプー台',
+        'spa': 'スパルーム',
+        'private': '個室',
     };
 
     return (

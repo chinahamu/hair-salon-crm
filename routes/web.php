@@ -71,9 +71,9 @@ Route::prefix('staff')->name('staff.')->group(function () {
         Route::get('dashboard', [\App\Http\Controllers\Staff\DashboardController::class, 'index'])->name('dashboard');
         Route::get('sales', [\App\Http\Controllers\Staff\SalesController::class, 'index'])->name('sales.index');
 
-        Route::resource('patients', \App\Http\Controllers\Staff\PatientController::class);
-        Route::resource('patients.contracts', \App\Http\Controllers\Staff\ContractController::class);
-        Route::post('patients/{patient}/contracts/{contract}/usage', [\App\Http\Controllers\Staff\ContractController::class, 'storeUsage'])->name('patients.contracts.usage.store');
+        Route::resource('customers', \App\Http\Controllers\Staff\CustomerController::class);
+        Route::resource('customers.contracts', \App\Http\Controllers\Staff\ContractController::class);
+        Route::post('customers/{customer}/contracts/{contract}/usage', [\App\Http\Controllers\Staff\ContractController::class, 'storeUsage'])->name('customers.contracts.usage.store');
         Route::resource('members', \App\Http\Controllers\Staff\StaffMemberController::class);
         Route::resource('clinic-roles', \App\Http\Controllers\Staff\ClinicRoleController::class);
         Route::get('audit-logs', [\App\Http\Controllers\Staff\AuditLogController::class, 'index'])->name('audit-logs.index');
@@ -81,19 +81,19 @@ Route::prefix('staff')->name('staff.')->group(function () {
         Route::resource('menus', \App\Http\Controllers\Staff\MenuController::class);
         Route::resource('products', \App\Http\Controllers\Staff\ProductController::class);
         Route::resource('rooms', \App\Http\Controllers\Staff\RoomController::class);
-        Route::resource('machines', \App\Http\Controllers\Staff\MachineController::class);
+
         Route::post('shifts/requests', [\App\Http\Controllers\Staff\ShiftController::class, 'storeRequests'])->name('shifts.requests.store');
         Route::post('shifts/generate', [\App\Http\Controllers\Staff\ShiftController::class, 'generate'])->name('shifts.generate');
         Route::resource('shifts', \App\Http\Controllers\Staff\ShiftController::class);
         Route::resource('reservations', \App\Http\Controllers\Staff\ReservationController::class);
 
-        Route::resource('medicines', \App\Http\Controllers\Staff\MedicineController::class);
+
         Route::resource('consumables', \App\Http\Controllers\Staff\ConsumableController::class);
         Route::resource('inventories', \App\Http\Controllers\Staff\InventoryController::class)->only(['index', 'create', 'store']);
 
         Route::resource('documents', \App\Http\Controllers\Staff\DocumentController::class);
-        Route::get('patients/{user}/sign', [\App\Http\Controllers\Staff\DocumentController::class, 'sign'])->name('documents.sign');
-        Route::post('patients/{user}/sign', [\App\Http\Controllers\Staff\DocumentController::class, 'storeSignature'])->name('documents.storeSignature');
+        Route::get('customers/{user}/sign', [\App\Http\Controllers\Staff\DocumentController::class, 'sign'])->name('documents.sign');
+        Route::post('customers/{user}/sign', [\App\Http\Controllers\Staff\DocumentController::class, 'storeSignature'])->name('documents.storeSignature');
 
         Route::get('settings/clinic', [\App\Http\Controllers\Staff\ClinicSettingController::class, 'edit'])->name('settings.clinic.edit');
         Route::put('settings/clinic', [\App\Http\Controllers\Staff\ClinicSettingController::class, 'update'])->name('settings.clinic.update');

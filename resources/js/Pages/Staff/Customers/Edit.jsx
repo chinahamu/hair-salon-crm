@@ -18,27 +18,27 @@ export default function Edit({ patient }) {
 
     const submit = (e) => {
         e.preventDefault();
-        put(route('staff.patients.update', patient.id));
+        put(route('staff.customers.update', patient.id));
     };
 
     return (
         <div className="bg-gray-100 min-h-screen">
-            <Head title={`患者編集: ${patient.name}`} />
+            <Head title={`顧客編集: ${patient.name}`} />
             <nav className="bg-white shadow mb-8 border-b-4 border-green-500">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="flex-shrink-0 flex items-center">
                                 <Link href={route('staff.dashboard')} className="font-bold text-xl text-green-600">
-                                    Clinic CRM Staff
+                                    Hair Salon CRM Staff
                                 </Link>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <Link
-                                    href={route('staff.patients.index')}
+                                    href={route('staff.customers.index')}
                                     className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
                                 >
-                                    患者管理
+                                    顧客管理
                                 </Link>
                             </div>
                         </div>
@@ -59,7 +59,7 @@ export default function Edit({ patient }) {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-semibold text-gray-900">患者編集: {patient.name}</h1>
+                    <h1 className="text-2xl font-semibold text-gray-900">顧客編集: {patient.name}</h1>
                 </div>
 
                 <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -235,7 +235,7 @@ export default function Edit({ patient }) {
                                             <label htmlFor="caution_flag" className="font-medium text-gray-700">
                                                 注意フラグ
                                             </label>
-                                            <p className="text-gray-500">この患者に特別な注意が必要な場合にチェックしてください。</p>
+                                            <p className="text-gray-500">この顧客に特別な注意が必要な場合にチェックしてください。</p>
                                         </div>
                                     </div>
                                 </div>
@@ -264,7 +264,7 @@ export default function Edit({ patient }) {
                             <div className="pt-5">
                                 <div className="flex justify-end">
                                     <Link
-                                        href={route('staff.patients.show', patient.id)}
+                                        href={route('staff.customers.show', patient.id)}
                                         className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
                                         キャンセル

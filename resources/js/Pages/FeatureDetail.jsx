@@ -45,7 +45,7 @@ const FeatureDetailSection = ({ title, description, imageSrc, reverse = false, d
 export default function FeatureDetail() {
     return (
         <>
-            <Head title="機能詳細 - Clinic CRM" />
+            <Head title="機能詳細 - Hair Salon CRM" />
             <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-indigo-500 selection:text-white">
 
                 {/* Navbar (Simplified) */}
@@ -54,9 +54,9 @@ export default function FeatureDetail() {
                         <div className="flex justify-between items-center">
                             <Link href="/" className="flex items-center gap-2 cursor-pointer">
                                 <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                                    <span className="text-white font-bold text-xl">C</span>
+                                    <span className="text-white font-bold text-xl">H</span>
                                 </div>
-                                <span className="font-bold text-2xl tracking-tight text-slate-900">Clinic<span className="text-indigo-600">CRM</span></span>
+                                <span className="font-bold text-2xl tracking-tight text-slate-900">Hair Salon<span className="text-indigo-600">CRM</span></span>
                             </Link>
                             <Link href="/" className="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">
                                 トップへ戻る
@@ -72,7 +72,7 @@ export default function FeatureDetail() {
                             機能詳細
                         </h1>
                         <p className="max-w-2xl mx-auto text-xl text-slate-600">
-                            Clinic CRMが提供する、クリニック運営を革新する機能の数々をご紹介します。
+                            Hair Salon CRMが提供する、サロン運営を革新する機能の数々をご紹介します。
                         </p>
                     </div>
                 </div>
@@ -81,12 +81,12 @@ export default function FeatureDetail() {
                 <div className="divide-y divide-slate-100">
                     <FeatureDetailSection
                         title="AI搭載スマート予約管理"
-                        description="従来の予約システムでは難しかった、複雑な条件（スタッフ、部屋、機器）を考慮した予約最適化をAIが自動で行います。"
+                        description="従来の予約システムでは難しかった、複雑な条件（スタイリスト、セット面、シャンプー台）を考慮した予約最適化をAIが自動で行います。"
                         imageSrc="/img/reservation.png"
                         details={[
                             {
                                 title: "自動最適化アルゴリズム",
-                                description: "スタッフのシフト、処置室の空き状況、必要な医療機器の稼働状況をリアルタイムで分析し、最適な予約枠を提案します。"
+                                description: "スタイリストのシフト、セット面の空き状況、シャンプー台の稼働状況をリアルタイムで分析し、最適な予約枠を提案します。"
                             },
                             {
                                 title: "ダブルブッキング防止",
@@ -94,28 +94,28 @@ export default function FeatureDetail() {
                             },
                             {
                                 title: "柔軟な設定変更",
-                                description: "急なスタッフの欠勤や機器の故障など、突発的な事態にも即座に対応し、予約枠を再計算します。"
+                                description: "急なスタッフの欠勤や設備の故障など、突発的な事態にも即座に対応し、予約枠を再計算します。"
                             }
                         ]}
                     />
 
                     <FeatureDetailSection
                         reverse
-                        title="患者マイページ"
-                        description="患者様自身のスマートフォンから、いつでもどこでも予約や確認ができる専用ポータルを提供します。"
+                        title="顧客マイページ"
+                        description="お客様自身のスマートフォンから、いつでもどこでも予約や確認ができる専用ポータルを提供します。"
                         imageSrc="/img/patientdashboard.png"
                         details={[
                             {
                                 title: "24時間365日予約受付",
-                                description: "診療時間外でも予約の受付・変更・キャンセルが可能。機会損失を防ぎ、患者様の利便性を向上させます。"
+                                description: "営業時間外でも予約の受付・変更・キャンセルが可能。機会損失を防ぎ、お客様の利便性を向上させます。"
                             },
                             {
                                 title: "予約履歴・施術履歴の確認",
-                                description: "過去の予約や施術内容をいつでも確認できるため、患者様自身の健康管理意識の向上にもつながります。"
+                                description: "過去の予約や施術内容をいつでも確認できるため、お客様自身の美容意識の向上にもつながります。"
                             },
                             {
                                 title: "お知らせ配信",
-                                description: "クリニックからのお知らせや、予約のリマインド通知を配信し、来院忘れを防止します。"
+                                description: "サロンからのお知らせや、予約のリマインド通知を配信し、来店忘れを防止します。"
                             }
                         ]}
                     />
@@ -156,7 +156,7 @@ export default function FeatureDetail() {
                 {/* Footer */}
                 <footer className="bg-slate-50 py-12 border-t border-slate-200 text-center text-slate-500 text-sm">
                     <div className="max-w-7xl mx-auto px-4">
-                        &copy; {new Date().getFullYear()} ClinicCRM. All rights reserved.
+                        &copy; {new Date().getFullYear()} Hair Salon CRM. All rights reserved.
                     </div>
                 </footer>
             </div>

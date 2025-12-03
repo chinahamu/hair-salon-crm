@@ -75,9 +75,9 @@ export default function Edit({ clinic, schedules, exceptions }) {
     return (
         <StaffLayout
             user={auth.user}
-            header="クリニック設定"
+            header="店舗設定"
         >
-            <Head title="クリニック設定" />
+            <Head title="店舗設定" />
 
             <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
                 <form onSubmit={handleSubmit} className="space-y-8">
@@ -104,7 +104,7 @@ export default function Edit({ clinic, schedules, exceptions }) {
                                                 onChange={(e) => handleScheduleChange(index, 'is_closed', e.target.checked)}
                                                 className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                             />
-                                            <span className="ml-2 text-sm text-gray-600">休診</span>
+                                            <span className="ml-2 text-sm text-gray-600">休業</span>
                                         </label>
                                     </div>
                                     {!schedule.is_closed && (
@@ -133,9 +133,9 @@ export default function Edit({ clinic, schedules, exceptions }) {
                     <div className="bg-white shadow sm:rounded-lg overflow-hidden">
                         <div className="px-4 py-5 sm:px-6 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
                             <div>
-                                <h3 className="text-lg leading-6 font-medium text-gray-900">臨時休診・特別営業時間</h3>
+                                <h3 className="text-lg leading-6 font-medium text-gray-900">臨時休業・特別営業時間</h3>
                                 <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                                    特定の日付の休診や営業時間を設定してください。
+                                    特定の日付の休業や営業時間を設定してください。
                                 </p>
                             </div>
                             <button
@@ -166,7 +166,7 @@ export default function Edit({ clinic, schedules, exceptions }) {
                                             onChange={(e) => handleExceptionChange(index, 'is_closed', e.target.checked)}
                                             className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                         />
-                                        <span className="ml-2 text-sm text-gray-600">休診</span>
+                                        <span className="ml-2 text-sm text-gray-600">休業</span>
                                     </label>
                                     {!exception.is_closed && (
                                         <div className="flex items-center space-x-2">

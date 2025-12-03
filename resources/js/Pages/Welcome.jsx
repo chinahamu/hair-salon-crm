@@ -78,7 +78,7 @@ export default function Welcome({ auth }) {
 
     return (
         <>
-            <Head title="Clinic CRM - 次世代のクリニック管理システム" />
+            <Head title="Hair Salon CRM - 次世代のサロン管理システム" />
             <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-indigo-500 selection:text-white">
 
                 {/* Navbar */}
@@ -86,8 +86,8 @@ export default function Welcome({ auth }) {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between items-center">
                             <div className="flex items-center gap-2 cursor-pointer">
-                                <img src="/img/logo.svg" alt="ClinicCRM Logo" className="w-10 h-10 shadow-lg shadow-indigo-500/20 rounded-xl" />
-                                <span className="font-bold text-2xl tracking-tight text-slate-900">Clinic<span className="text-indigo-600">CRM</span></span>
+                                <img src="/img/logo.svg" alt="HairSalonCRM Logo" className="w-10 h-10 shadow-lg shadow-indigo-500/20 rounded-xl" />
+                                <span className="font-bold text-2xl tracking-tight text-slate-900">Hair Salon<span className="text-indigo-600">CRM</span></span>
                             </div>
 
                             <div className="hidden md:flex items-center space-x-8">
@@ -119,8 +119,8 @@ export default function Welcome({ auth }) {
                         </h1>
 
                         <p className="mt-6 max-w-2xl mx-auto text-xl text-slate-600 mb-10 leading-relaxed">
-                            導入時は基本機能からスタート。日々の診療で感じる「もっとこうしたい」を教えてください。<br className="hidden md:block" />
-                            専任エンジニアがあなたのクリニックに合わせて機能を実装し、使いやすいシステムへと育てていきます。
+                            導入時は基本機能からスタート。日々のサロンワークで感じる「もっとこうしたい」を教えてください。<br className="hidden md:block" />
+                            専任エンジニアがあなたのサロンに合わせて機能を実装し、使いやすいシステムへと育てていきます。
                         </p>
 
                         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-20">
@@ -153,7 +153,7 @@ export default function Welcome({ auth }) {
                             <h2 className="text-3xl font-bold text-slate-900 mb-4">なぜ「育てる」のか？</h2>
                             <p className="text-slate-600 max-w-2xl mx-auto">
                                 一般的なSaaSは機能が多すぎて使いこなせない、あるいは帯に短し襷に長し。<br />
-                                私たちは、あなたのクリニックに必要な機能だけを、必要なタイミングで実装します。
+                                私たちは、あなたのサロンに必要な機能だけを、必要なタイミングで実装します。
                             </p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
@@ -173,7 +173,7 @@ export default function Welcome({ auth }) {
                             <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
                                 <div className="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">3</div>
                                 <h3 className="text-xl font-bold text-slate-900 mb-4">最短即日で実装</h3>
-                                <p className="text-slate-600">専任エンジニアが迅速に開発・実装。あなたのクリニック専用にシステムが進化します。</p>
+                                <p className="text-slate-600">専任エンジニアが迅速に開発・実装。あなたのサロン専用にシステムが進化します。</p>
                             </div>
                         </div>
                     </div>
@@ -183,7 +183,7 @@ export default function Welcome({ auth }) {
                 <div id="features">
                     <FeatureSection
                         title="複雑な予約も、AIが瞬時に最適化"
-                        description="スタッフのシフト、部屋の空き状況、機器の利用可否。これら全ての条件をリアルタイムで照合し、最適な予約枠を自動で提案します。ダブルブッキングの心配はもうありません。"
+                        description="スタイリストのシフト、セット面の空き状況、シャンプー台の利用可否。これら全ての条件をリアルタイムで照合し、最適な予約枠を自動で提案します。ダブルブッキングの心配はもうありません。"
                         icon={
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -196,21 +196,21 @@ export default function Welcome({ auth }) {
                     {/* Feature 2: Patient Portal */}
                     <FeatureSection
                         reverse
-                        title="患者様に、最高の利便性を"
+                        title="お客様に、最高の利便性を"
                         description="専用のマイページから、24時間いつでも予約・変更が可能。予約履歴の確認や、過去の施術内容の閲覧もスムーズに。電話対応の負担を大幅に削減します。"
                         icon={
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                             </svg>
                         }
-                        imageLabel="スマホ版患者マイページ"
+                        imageLabel="スマホ版顧客マイページ"
                         imageSrc="/img/patientdashboard.png"
                     />
 
                     {/* Feature 3: Staff Management */}
                     <FeatureSection
                         title="チームの力を最大化する管理機能"
-                        description="スタッフごとのスキルや役割に応じたシフト管理が可能。パフォーマンス分析機能により、クリニック全体の生産性向上をサポートします。"
+                        description="スタッフごとのスキルや役割に応じたシフト管理が可能。パフォーマンス分析機能により、サロン全体の生産性向上をサポートします。"
                         icon={
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -229,7 +229,7 @@ export default function Welcome({ auth }) {
                                 他にも、便利な機能がたくさん
                             </h2>
                             <p className="text-slate-600 max-w-2xl mx-auto">
-                                クリニック運営に必要なあらゆるツールを、ひとつのパッケージに。
+                                サロン運営に必要なあらゆるツールを、ひとつのパッケージに。
                             </p>
                         </div>
 
@@ -242,12 +242,12 @@ export default function Welcome({ auth }) {
                             />
                             <BentoItem
                                 title="リソース管理"
-                                description="部屋や機器の稼働状況を可視化し、無駄をなくします。"
+                                description="セット面やシャンプー台の稼働状況を可視化し、無駄をなくします。"
                                 icon={<svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>}
                             />
                             <BentoItem
                                 title="商品販売管理"
-                                description="物販の在庫管理から売上分析まで対応。"
+                                description="店販商品の在庫管理から売上分析まで対応。"
                                 icon={<svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>}
                             />
                             <BentoItem
@@ -262,12 +262,12 @@ export default function Welcome({ auth }) {
                             />
                             <BentoItem
                                 title="公式ホームページとの連携"
-                                description="弊社にHP運用もお任せすれば、施術メニューや価格、医師出勤表などを公式ホームページと連携。"
+                                description="弊社にHP運用もお任せすれば、メニューや価格、スタイリスト出勤表などを公式ホームページと連携。"
                                 icon={<svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>}
                             />
                             <BentoItem
                                 title="独自ドメイン対応"
-                                description="クリニックの信頼性を高めるため、独自のドメイン（例: crm.your-clinic.com）でシステムを運用可能です。"
+                                description="サロンの信頼性を高めるため、独自のドメイン（例: crm.your-salon.com）でシステムを運用可能です。"
                                 icon={<svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-9 3-9m-3 9c-1.657 0-3-9-3-9m0 18c-1.657 0-3-9-3-9m3 9c1.657 0 3-9 3-9" /></svg>}
                                 className="md:col-span-2 bg-purple-50 border-purple-100"
                             />
@@ -297,14 +297,14 @@ export default function Welcome({ auth }) {
                                 </div>
                                 <p className="text-slate-600 mb-8 leading-relaxed">
                                     基本機能の利用はもちろん、<br />
-                                    クリニック独自の機能追加・改善も月額費用に含まれています。
+                                    サロン独自の機能追加・改善も月額費用に含まれています。
                                 </p>
                                 <ul className="space-y-4 text-left mb-8">
                                     {[
                                         "予約システム無制限利用",
                                         "機能追加・カスタマイズ依頼",
                                         "スタッフ・シフト管理",
-                                        "患者マイページ機能",
+                                        "顧客マイページ機能",
                                         "売上・在庫管理"
                                     ].map((item, i) => (
                                         <li key={i} className="flex items-center text-slate-600">
@@ -334,7 +334,7 @@ export default function Welcome({ auth }) {
                     </div>
                     <div className="max-w-4xl mx-auto px-4 relative text-center">
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 tracking-tight">
-                            クリニックの未来を、<br />ここから始めましょう。
+                            サロンの未来を、<br />ここから始めましょう。
                         </h2>
                         <p className="text-indigo-200 text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
                             導入相談から運用サポートまで、専任のチームがバックアップします。<br />
@@ -351,7 +351,7 @@ export default function Welcome({ auth }) {
                 {/* Other Services Link */}
                 <div className="bg-slate-50 py-12 text-center border-t border-slate-200">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <p className="text-slate-600 mb-4 font-medium">クリニック運営以外の支援も行っています</p>
+                        <p className="text-slate-600 mb-4 font-medium">サロン運営以外の支援も行っています</p>
                         <a
                             href="https://meta-alchemist.co.jp/#services-overview"
                             target="_blank"
@@ -375,12 +375,12 @@ export default function Welcome({ auth }) {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
                             <div className="col-span-2 md:col-span-1">
                                 <div className="flex items-center gap-2 mb-4">
-                                    <img src="/img/logo.svg" alt="ClinicCRM Logo" className="w-8 h-8 rounded-lg" />
-                                    <span className="font-bold text-xl text-slate-900">Clinic<span className="text-indigo-600">CRM</span></span>
+                                    <img src="/img/logo.svg" alt="HairSalonCRM Logo" className="w-8 h-8 rounded-lg" />
+                                    <span className="font-bold text-xl text-slate-900">Hair Salon<span className="text-indigo-600">CRM</span></span>
                                 </div>
                                 <p className="text-slate-500 text-sm leading-relaxed">
                                     現場の声で使いやすくなる、<br />
-                                    新しいクリニック管理システム。
+                                    新しいサロン管理システム。
                                 </p>
                             </div>
                             <div>
@@ -402,7 +402,7 @@ export default function Welcome({ auth }) {
                             </div>
                         </div>
                         <div className="border-t border-slate-200 pt-8 text-center text-slate-500 text-sm">
-                            &copy; {new Date().getFullYear()} ClinicCRM. All rights reserved.
+                            &copy; {new Date().getFullYear()} Hair Salon CRM. All rights reserved.
                         </div>
                     </div>
                 </footer>

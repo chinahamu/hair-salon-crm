@@ -37,19 +37,18 @@ export default function Create({ auth, products, roomTypes, machines, roles, med
         'owner': 'オーナー',
         'admin': '管理者',
         'manager': 'マネージャー',
-        'doctor': '医師',
+        'stylist': 'スタイリスト',
         'reception': '受付',
-        'nurse': '看護師',
+        'assistant': 'アシスタント',
         'staff': 'スタッフ',
-        'counselor': 'カウンセラー',
         'hq': '本部',
     };
 
     const roomTypeMap = {
-        'consultation': '診察室',
-        'treatment': '処置室',
-        'counseling': 'カウンセリングルーム',
-        'operating': '手術室',
+        'seat': 'セット面',
+        'shampoo': 'シャンプー台',
+        'spa': 'スパルーム',
+        'private': '個室',
     };
 
     return (

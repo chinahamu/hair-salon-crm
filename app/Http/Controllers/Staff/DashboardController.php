@@ -21,9 +21,7 @@ class DashboardController extends Controller
             ->orderBy('start_time')
             ->get();
 
-        $lowStockMedicines = \App\Models\Medicine::whereHas('stock', function ($query) {
-            $query->whereRaw('stocks.quantity <= medicines.alert_threshold');
-        })->with('stock')->get();
+
 
         $lowStockConsumables = \App\Models\Consumable::whereHas('stock', function ($query) {
             $query->whereRaw('stocks.quantity <= consumables.alert_threshold');
@@ -33,7 +31,6 @@ class DashboardController extends Controller
             'today_reservations_count' => $todayReservationsCount,
             'today_schedule' => $todaySchedule,
             'low_stock_products' => \App\Models\Product::whereColumn('stock', '<=', 'threshold')->get(),
-            'low_stock_medicines' => $lowStockMedicines,
             'low_stock_consumables' => $lowStockConsumables,
         ]);
     }

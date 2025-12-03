@@ -14,7 +14,7 @@ class ContractController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, User $patient)
+    public function store(Request $request, User $customer)
     {
         $validated = $request->validate([
             'menu_id' => 'required|exists:menus,id',
@@ -24,9 +24,9 @@ class ContractController extends Controller
 
         $menu = Menu::findOrFail($validated['menu_id']);
 
-        DB::transaction(function () use ($patient, $menu, $validated) {
+        DB::transaction(function () use ($customer, $menu, $validated) {
             $contract = new Contract();
-            $contract->user_id = $patient->id;
+            $contract->user_id = $customer->id;
             $contract->menu_id = $menu->id;
             $contract->clinic_id = auth()->guard('staff')->user()->clinic_id; // Assuming staff belongs to a clinic
             $contract->contract_date = $validated['contract_date'];

@@ -131,7 +131,7 @@ export default function Edit({ auth, member, clinicRoles, clinics }) {
                                 {/* 所属クリニック */}
                                 <div>
                                     <label htmlFor="clinic_id" className="block text-sm font-medium text-gray-700 mb-1">
-                                        所属クリニック <span className="text-red-500">*</span>
+                                        所属店舗 <span className="text-red-500">*</span>
                                     </label>
                                     <select
                                         id="clinic_id"

@@ -15,7 +15,7 @@ export default function Index({ auth, patient, contracts, menus }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('staff.patients.contracts.store', patient.id), {
+        post(route('staff.customers.contracts.store', patient.id), {
             onSuccess: () => {
                 reset();
                 setShowCreateForm(false);
@@ -58,12 +58,12 @@ export default function Index({ auth, patient, contracts, menus }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                    
+
                     {/* パンくずリスト的なナビゲーション */}
                     <div className="flex items-center space-x-2 text-sm text-gray-500 mb-4">
-                        <Link href={route('staff.patients.index')} className="hover:text-primary-600">患者一覧</Link>
+                        <Link href={route('staff.customers.index')} className="hover:text-primary-600">顧客一覧</Link>
                         <span>&gt;</span>
-                        <Link href={route('staff.patients.show', patient.id)} className="hover:text-primary-600">{patient.name}</Link>
+                        <Link href={route('staff.customers.show', patient.id)} className="hover:text-primary-600">{patient.name}</Link>
                         <span>&gt;</span>
                         <span className="text-gray-900 font-medium">契約管理</span>
                     </div>
@@ -197,17 +197,16 @@ export default function Index({ auth, patient, contracts, menus }) {
                                                 {contract.expiration_date ? new Date(contract.expiration_date).toLocaleDateString() : '-'}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm">
-                                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                                    contract.status === 'active' 
-                                                        ? 'bg-green-100 text-green-800' 
-                                                        : 'bg-gray-100 text-gray-800'
-                                                }`}>
+                                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${contract.status === 'active'
+                                                    ? 'bg-green-100 text-green-800'
+                                                    : 'bg-gray-100 text-gray-800'
+                                                    }`}>
                                                     {contract.status === 'active' ? '有効' : contract.status}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <Link 
-                                                    href={route('staff.patients.contracts.show', [patient.id, contract.id])} 
+                                                <Link
+                                                    href={route('staff.customers.contracts.show', [patient.id, contract.id])}
                                                     className="text-primary-600 hover:text-primary-900 font-semibold"
                                                 >
                                                     詳細

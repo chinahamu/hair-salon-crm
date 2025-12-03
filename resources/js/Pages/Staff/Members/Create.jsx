@@ -68,7 +68,7 @@ export default function Create({ auth, clinicRoles, clinics }) {
                                     value={data.email}
                                     onChange={(e) => setData('email', e.target.value)}
                                     className="w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500 shadow-sm transition-colors"
-                                    placeholder="example@clinic.com"
+                                    placeholder="example@salon.com"
                                     required
                                 />
                                 {errors.email && <div className="mt-1 text-sm text-red-600">{errors.email}</div>}
@@ -135,7 +135,7 @@ export default function Create({ auth, clinicRoles, clinics }) {
                                 {/* 所属クリニック */}
                                 <div>
                                     <label htmlFor="clinic_id" className="block text-sm font-medium text-gray-700 mb-1">
-                                        所属クリニック <span className="text-red-500">*</span>
+                                        所属店舗 <span className="text-red-500">*</span>
                                     </label>
                                     <select
                                         id="clinic_id"
