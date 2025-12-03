@@ -6,7 +6,7 @@ use App\Models\Menu;
 use App\Models\Reservation;
 use App\Models\Shift;
 use App\Models\Room;
-use App\Models\Machine;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Carbon\Carbon;
@@ -104,24 +104,7 @@ class ReservationController extends Controller
             return false;
         }
 
-        // Check Machine Availability
-        $machineId = $menu->required_machine_id;
-        if ($machineId) {
-             $machine = Machine::find($machineId);
-             if (!$machine) {
-                 return false;
-             }
-             $totalMachines = $machine->quantity;
-             $busyMachines = Reservation::where('machine_id', $machineId)
-             ->where(function ($query) use ($start, $end) {
-                $query->where('start_time', '<', $end)
-                      ->where('end_time', '>', $start);
-            })->count();
 
-            if ($busyMachines >= $totalMachines) {
-                return false;
-            }
-        }
 
         return true;
     }
@@ -143,23 +126,7 @@ class ReservationController extends Controller
         $staffId = $this->findAvailableStaff($start, $end);
         $roomId = $this->findAvailableRoom($start, $end, $menu->required_room_type);
         
-        $machineId = null;
-        if ($menu->required_machine_id) {
-            $machine = Machine::find($menu->required_machine_id);
-            if ($machine) {
-                $busyMachines = Reservation::where('machine_id', $menu->required_machine_id)
-                    ->where(function ($query) use ($start, $end) {
-                        $query->where('start_time', '<', $end)
-                              ->where('end_time', '>', $start);
-                    })->count();
-                
-                if ($busyMachines < $machine->quantity) {
-                    $machineId = $menu->required_machine_id;
-                } else {
-                     return back()->withErrors(['message' => 'Selected slot is no longer available (Machine).']);
-                }
-            }
-        }
+
 
         if (!$staffId || !$roomId) {
              return back()->withErrors(['message' => 'Selected slot is no longer available.']);
@@ -170,7 +137,7 @@ class ReservationController extends Controller
             'menu_id' => $menu->id,
             'staff_id' => $staffId,
             'room_id' => $roomId,
-            'machine_id' => $machineId,
+
             'start_time' => $start,
             'end_time' => $end,
             'status' => 'confirmed',

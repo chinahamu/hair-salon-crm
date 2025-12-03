@@ -23,8 +23,7 @@ class ReservationForm
                     ->numeric(),
                 TextInput::make('room_id')
                     ->numeric(),
-                TextInput::make('machine_id')
-                    ->numeric(),
+
                 DateTimePicker::make('start_time')
                     ->required(),
                 DateTimePicker::make('end_time')

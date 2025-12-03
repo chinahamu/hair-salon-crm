@@ -24,10 +24,7 @@ class Clinic extends Model
         return $this->hasMany(Staff::class);
     }
 
-    public function machines()
-    {
-        return $this->hasMany(Machine::class);
-    }
+
 
     public function rooms()
     {

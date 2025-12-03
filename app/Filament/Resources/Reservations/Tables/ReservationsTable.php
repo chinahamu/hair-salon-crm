@@ -26,9 +26,7 @@ class ReservationsTable
                 TextColumn::make('room_id')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('machine_id')
-                    ->numeric()
-                    ->sortable(),
+
                 TextColumn::make('start_time')
                     ->dateTime()
                     ->sortable(),

@@ -14,7 +14,7 @@ class Reservation extends Model
         'menu_id',
         'staff_id',
         'room_id',
-        'machine_id',
+
         'clinic_id',
         'start_time',
         'end_time',
@@ -54,10 +54,7 @@ class Reservation extends Model
         return $this->belongsTo(Room::class);
     }
 
-    public function machine()
-    {
-        return $this->belongsTo(Machine::class);
-    }
+
 
     public function items()
     {

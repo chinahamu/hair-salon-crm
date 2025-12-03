@@ -13,7 +13,7 @@ class MenuController extends Controller
     public function index()
     {
         return Inertia::render('Staff/Menus/Index', [
-            'menus' => Menu::with('requiredMachine')->get(),
+            'menus' => Menu::get(),
         ]);
     }
 
