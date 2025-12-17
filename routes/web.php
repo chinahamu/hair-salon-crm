@@ -66,6 +66,9 @@ Route::prefix('staff')->name('staff.')->group(function () {
     Route::resource('menus', \App\Http\Controllers\MenuController::class)
         ->middleware('auth:staff');
 
+    Route::resource('facilities', \App\Http\Controllers\FacilityController::class)
+        ->middleware('auth:staff');
+
     Route::middleware('auth:staff')->group(function () {
         Route::get('/shifts', [\App\Http\Controllers\ShiftController::class, 'index'])->name('shifts.index');
         Route::post('/shifts', [\App\Http\Controllers\ShiftController::class, 'store'])->name('shifts.store');
