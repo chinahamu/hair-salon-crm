@@ -22,7 +22,7 @@ export default function Index({ auth, shifts, staffList, store }) {
     };
 
     const handleDelete = (id) => {
-        if (confirm('Are you sure you want to delete this shift?')) {
+        if (confirm('このシフトを削除してもよろしいですか？')) {
             router.delete(route('staff.shifts.destroy', id));
         }
     };
@@ -30,30 +30,20 @@ export default function Index({ auth, shifts, staffList, store }) {
     return (
         <StaffLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Shift Management</h2>}
-            stores={auth.user.staff?.organization?.stores || []} // Assuming passed by middleware or layout logic? Layout expects stores. 
-            // Wait, Layout expects 'stores' and 'selectedStore'. 
-            // StaffLayout typically gets these from props. Dashboard passes them.
-            // I should pass them from controller if Layout needs them.
-            // But StaffLayout implies they might be global or shared. 
-            // In Dashboard, they are passed from DashboardController.
-            // I need to ensure ShiftController passes necessary layout props or Layout handles it.
-            // Let's assume standard props handling.
-            // Just pass nothing for now or handle in controller.
-            // Re-reading Dashboard.jsx: <StaffLayout stores={stores} selectedStore={selectedStore}>
-            // So these need to be passed to this Index component.
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">シフト管理</h2>}
+            stores={auth.user.staff?.organization?.stores || []}
             selectedStore={store}
         >
-            <Head title="Shifts" />
+            <Head title="シフト管理" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                         <div className="p-6 text-gray-900">
-                            <h3 className="text-lg font-medium mb-4">Add New Shift</h3>
+                            <h3 className="text-lg font-medium mb-4">シフト登録</h3>
                             <form onSubmit={submit} className="space-y-4">
                                 <div>
-                                    <InputLabel htmlFor="staff_id" value="Staff" />
+                                    <InputLabel htmlFor="staff_id" value="スタッフ" />
                                     <select
                                         id="staff_id"
                                         name="staff_id"
@@ -72,7 +62,7 @@ export default function Index({ auth, shifts, staffList, store }) {
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <InputLabel htmlFor="start_time" value="Start Time" />
+                                        <InputLabel htmlFor="start_time" value="開始日時" />
                                         <TextInput
                                             id="start_time"
                                             type="datetime-local"
@@ -84,7 +74,7 @@ export default function Index({ auth, shifts, staffList, store }) {
                                         <InputError message={errors.start_time} className="mt-2" />
                                     </div>
                                     <div>
-                                        <InputLabel htmlFor="end_time" value="End Time" />
+                                        <InputLabel htmlFor="end_time" value="終了日時" />
                                         <TextInput
                                             id="end_time"
                                             type="datetime-local"
@@ -97,23 +87,23 @@ export default function Index({ auth, shifts, staffList, store }) {
                                     </div>
                                 </div>
 
-                                <PrimaryButton disabled={processing}>Add Shift</PrimaryButton>
+                                <PrimaryButton disabled={processing}>登録する</PrimaryButton>
                             </form>
                         </div>
                     </div>
 
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <h3 className="text-lg font-medium mb-4">Scheduled Shifts</h3>
+                            <h3 className="text-lg font-medium mb-4">シフト一覧</h3>
                             <div className="overflow-x-auto">
                                 <table className="min-w-full divide-y divide-gray-200">
                                     <thead className="bg-gray-50">
                                         <tr>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Staff</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">スタッフ</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">開始</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">終了</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ステータス</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
@@ -128,7 +118,7 @@ export default function Index({ auth, shifts, staffList, store }) {
                                                         onClick={() => handleDelete(shift.id)}
                                                         className="text-red-600 hover:text-red-900"
                                                     >
-                                                        Delete
+                                                        削除
                                                     </button>
                                                 </td>
                                             </tr>
