@@ -13,7 +13,8 @@ class StoreController extends Controller
      */
     public function index()
     {
-        $stores = Store::all();
+        // Only show stores belonging to the staff's organization
+        $stores = Store::where('organization_id', auth()->guard('staff')->user()->organization_id)->get();
         return Inertia::render('Staff/Store/Index', [
             'stores' => $stores
         ]);
@@ -40,6 +41,9 @@ class StoreController extends Controller
             'description' => 'nullable|string',
         ]);
 
+        // Assign to the staff's organization
+        $validated['organization_id'] = auth()->guard('staff')->user()->organization_id;
+
         Store::create($validated);
 
         return redirect()->route('staff.stores.index');
@@ -50,6 +54,11 @@ class StoreController extends Controller
      */
     public function edit(Store $store)
     {
+        // Ensure the store belongs to the staff's organization
+        if ($store->organization_id !== auth()->guard('staff')->user()->organization_id) {
+            abort(403);
+        }
+
         return Inertia::render('Staff/Store/Edit', [
             'store' => $store
         ]);
@@ -60,6 +69,11 @@ class StoreController extends Controller
      */
     public function update(Request $request, Store $store)
     {
+        // Ensure the store belongs to the staff's organization
+        if ($store->organization_id !== auth()->guard('staff')->user()->organization_id) {
+            abort(403);
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
@@ -78,6 +92,11 @@ class StoreController extends Controller
      */
     public function destroy(Store $store)
     {
+        // Ensure the store belongs to the staff's organization
+        if ($store->organization_id !== auth()->guard('staff')->user()->organization_id) {
+            abort(403);
+        }
+
         $store->delete();
 
         return redirect()->route('staff.stores.index');

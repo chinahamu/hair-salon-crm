@@ -15,5 +15,11 @@ class Store extends Model
         'phone',
         'email',
         'description',
+        'organization_id',
     ];
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
 }

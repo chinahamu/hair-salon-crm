@@ -10,6 +10,11 @@ class Staff extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -19,6 +24,7 @@ class Staff extends Authenticatable
         'name',
         'email',
         'password',
+        'organization_id',
     ];
 
     /**
