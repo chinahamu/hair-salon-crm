@@ -32,6 +32,8 @@ export default function Login() {
                         <input
                             id="email"
                             type="email"
+                            name="email"
+                            autoComplete="username"
                             value={data.email}
                             className="w-full px-4 py-3 rounded-lg bg-white/20 border border-emerald-300/30 text-white placeholder-emerald-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition duration-200"
                             placeholder="staff@example.com"
@@ -47,6 +49,8 @@ export default function Login() {
                         <input
                             id="password"
                             type="password"
+                            name="password"
+                            autoComplete="current-password"
                             value={data.password}
                             className="w-full px-4 py-3 rounded-lg bg-white/20 border border-emerald-300/30 text-white placeholder-emerald-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition duration-200"
                             placeholder="••••••••"
