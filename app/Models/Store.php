@@ -42,4 +42,9 @@ class Store extends Model
     {
         return $this->hasMany(Reservation::class);
     }
+
+    public function menus()
+    {
+        return $this->hasMany(Menu::class);
+    }
 }

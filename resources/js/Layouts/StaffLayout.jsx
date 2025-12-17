@@ -64,6 +64,15 @@ export default function StaffLayout({ children, stores = [], selectedStore = nul
                             店舗管理
                         </Link>
                         <Link
+                            href={route('staff.menus.index')}
+                            className={`flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors duration-150 ease-in-out ${route().current('staff.menus.*')
+                                ? 'bg-indigo-50 text-indigo-700'
+                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                }`}
+                        >
+                            メニュー管理
+                        </Link>
+                        <Link
                             href={route('staff.shifts.index')}
                             className={`flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors duration-150 ease-in-out ${route().current('staff.shifts.*')
                                 ? 'bg-indigo-50 text-indigo-700'
@@ -158,6 +167,15 @@ export default function StaffLayout({ children, stores = [], selectedStore = nul
                                 }`}
                         >
                             店舗管理
+                        </Link>
+                        <Link
+                            href={route('staff.menus.index')}
+                            className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${route().current('staff.menus.*')
+                                ? 'border-indigo-500 text-indigo-700 bg-indigo-50'
+                                : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300'
+                                }`}
+                        >
+                            メニュー管理
                         </Link>
                         <Link
                             href={route('staff.shifts.index')}
