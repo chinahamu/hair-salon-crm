@@ -74,6 +74,9 @@ Route::prefix('staff')->name('staff.')->group(function () {
         Route::post('/shifts', [\App\Http\Controllers\ShiftController::class, 'store'])->name('shifts.store');
         Route::delete('/shifts/{shift}', [\App\Http\Controllers\ShiftController::class, 'destroy'])->name('shifts.destroy');
     });
+
+    Route::resource('reservations', \App\Http\Controllers\Staff\ReservationController::class)
+        ->middleware('auth:staff');
 });
 
 Route::middleware(['auth:web'])->group(function () {
