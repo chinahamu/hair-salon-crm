@@ -77,6 +77,8 @@ Route::prefix('staff')->name('staff.')->group(function () {
 
     Route::resource('reservations', \App\Http\Controllers\Staff\ReservationController::class)
         ->middleware('auth:staff');
+
+    Route::resource('customers', \App\Http\Controllers\Staff\CustomerController::class);
 });
 
 Route::middleware(['auth:web'])->group(function () {
