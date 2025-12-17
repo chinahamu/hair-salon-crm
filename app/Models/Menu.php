@@ -28,4 +28,16 @@ class Menu extends Model
     {
         return $this->belongsTo(Store::class);
     }
+
+    public function facilityRequirements()
+    {
+        return $this->hasMany(MenuFacilityRequirement::class);
+    }
+
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class, 'reservation_menus')
+            ->withPivot('price', 'duration')
+            ->withTimestamps();
+    }
 }

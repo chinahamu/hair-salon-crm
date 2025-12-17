@@ -39,4 +39,11 @@ class Reservation extends Model
     {
         return $this->belongsTo(Store::class);
     }
+
+    public function menus()
+    {
+        return $this->belongsToMany(Menu::class, 'reservation_menus')
+            ->withPivot('price', 'duration')
+            ->withTimestamps();
+    }
 }

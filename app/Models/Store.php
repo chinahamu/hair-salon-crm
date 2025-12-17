@@ -47,4 +47,9 @@ class Store extends Model
     {
         return $this->hasMany(Menu::class);
     }
+
+    public function facilities()
+    {
+        return $this->hasMany(Facility::class);
+    }
 }
