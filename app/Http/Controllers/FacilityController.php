@@ -15,20 +15,47 @@ class FacilityController extends Controller
      */
     public function index(Request $request)
     {
-        $storeId = $request->session()->get('selected_store_id');
-        $facilities = Facility::where('store_id', $storeId)->get();
+        $organization_id = auth()->guard('staff')->user()->organization_id;
+        $stores = Store::where('organization_id', $organization_id)->get();
+        $selectedStoreId = $request->session()->get('staff_selected_store_id');
+        
+        $selectedStore = null;
+        if ($selectedStoreId) {
+            $selectedStore = $stores->firstWhere('id', $selectedStoreId);
+        }
+
+        if (!$selectedStore && $stores->isNotEmpty()) {
+            $selectedStore = $stores->first();
+            $request->session()->put('staff_selected_store_id', $selectedStore->id);
+        }
+
+        if ($selectedStore) {
+            $facilities = Facility::where('store_id', $selectedStore->id)->get();
+        } else {
+            $facilities = [];
+        }
 
         return Inertia::render('Staff/Facilities/Index', [
             'facilities' => $facilities,
+            'stores' => $stores,
+            'selectedStore' => $selectedStore,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('Staff/Facilities/Create');
+        $organization_id = auth()->guard('staff')->user()->organization_id;
+        $stores = Store::where('organization_id', $organization_id)->get();
+        $selectedStoreId = $request->session()->get('staff_selected_store_id');
+        $selectedStore = $stores->firstWhere('id', $selectedStoreId) ?? $stores->first();
+
+        return Inertia::render('Staff/Facilities/Create', [
+            'stores' => $stores,
+            'selectedStore' => $selectedStore,
+        ]);
     }
 
     /**
@@ -42,7 +69,11 @@ class FacilityController extends Controller
             'status' => 'required|string|in:active,inactive',
         ]);
 
-        $storeId = $request->session()->get('selected_store_id');
+        $storeId = $request->session()->get('staff_selected_store_id');
+        if (!$storeId) {
+             // Fallback or Error
+             return back()->withErrors(['store_id' => '店舗が選択されていません。']);
+        }
 
         Facility::create([
             'store_id' => $storeId,
@@ -57,10 +88,17 @@ class FacilityController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Facility $facility)
+    public function edit(Request $request, Facility $facility)
     {
+        $organization_id = auth()->guard('staff')->user()->organization_id;
+        $stores = Store::where('organization_id', $organization_id)->get();
+        $selectedStoreId = $request->session()->get('staff_selected_store_id');
+        $selectedStore = $stores->firstWhere('id', $selectedStoreId) ?? $stores->first();
+
         return Inertia::render('Staff/Facilities/Edit', [
             'facility' => $facility,
+             'stores' => $stores,
+            'selectedStore' => $selectedStore,
         ]);
     }
 
