@@ -23,9 +23,9 @@ export default function Index({ auth, reservations, stores, filters }) {
     // Status badges
     const getStatusBadge = (status) => {
         switch (status) {
-            case 'confirmed': return <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Confirmed</span>;
-            case 'cancelled': return <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Cancelled</span>;
-            case 'completed': return <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Completed</span>;
+            case 'confirmed': return <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">確定</span>;
+            case 'cancelled': return <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">キャンセル</span>;
+            case 'completed': return <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">完了</span>;
             default: return <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">{status}</span>;
         }
     };
@@ -34,24 +34,24 @@ export default function Index({ auth, reservations, stores, filters }) {
         <StaffLayout
             stores={stores}
         >
-            <Head title="Reservations" />
+            <Head title="予約管理" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight mb-6">Reservation Management</h2>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight mb-6">予約管理</h2>
 
                     {/* Actions and Filters */}
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6 p-6">
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-lg font-medium text-gray-900">Reservations List</h3>
+                            <h3 className="text-lg font-medium text-gray-900">予約リスト</h3>
                             <Link href={route('staff.reservations.create')}>
-                                <PrimaryButton>New Reservation</PrimaryButton>
+                                <PrimaryButton>新規予約登録</PrimaryButton>
                             </Link>
                         </div>
 
                         <form onSubmit={submitFilter} className="flex gap-4 items-end">
                             <div>
-                                <InputLabel htmlFor="date" value="Date" />
+                                <InputLabel htmlFor="date" value="日付" />
                                 <TextInput
                                     id="date"
                                     type="date"
@@ -63,7 +63,7 @@ export default function Index({ auth, reservations, stores, filters }) {
                             </div>
 
                             <div>
-                                <InputLabel htmlFor="store_id" value="Store" />
+                                <InputLabel htmlFor="store_id" value="店舗" />
                                 <select
                                     id="store_id"
                                     name="store_id"
@@ -71,7 +71,7 @@ export default function Index({ auth, reservations, stores, filters }) {
                                     onChange={handleFilterChange}
                                     className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                                 >
-                                    <option value="">All Stores</option>
+                                    <option value="">全店舗</option>
                                     {stores.map(store => (
                                         <option key={store.id} value={store.id}>{store.name}</option>
                                     ))}
@@ -79,7 +79,7 @@ export default function Index({ auth, reservations, stores, filters }) {
                             </div>
 
                             <PrimaryButton className="mb-0.5" disabled={false}>
-                                Filter
+                                絞り込み
                             </PrimaryButton>
                         </form>
                     </div>
@@ -91,12 +91,12 @@ export default function Index({ auth, reservations, stores, filters }) {
                                     <thead className="bg-gray-50">
                                         <tr>
                                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Store</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Staff</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">日時</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">顧客</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">店舗</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">担当スタッフ</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ステータス</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
@@ -107,14 +107,14 @@ export default function Index({ auth, reservations, stores, filters }) {
                                                     {new Date(reservation.start_time).toLocaleString('ja-JP')} <br />
                                                     <span className="text-gray-500 text-xs">~ {new Date(reservation.end_time).toLocaleTimeString('ja-JP')}</span>
                                                 </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{reservation.user?.name || 'Unknown'}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{reservation.user?.name || '不明'}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{reservation.store?.name}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{reservation.staff?.name || 'Any'}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{reservation.staff?.name || '指名なし'}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     {getStatusBadge(reservation.status)}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                    <Link href={route('staff.reservations.edit', reservation.id)} className="text-indigo-600 hover:text-indigo-900">Edit</Link>
+                                                    <Link href={route('staff.reservations.edit', reservation.id)} className="text-indigo-600 hover:text-indigo-900">編集</Link>
                                                 </td>
                                             </tr>
                                         ))}

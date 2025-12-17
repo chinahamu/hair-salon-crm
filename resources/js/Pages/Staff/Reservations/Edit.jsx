@@ -56,7 +56,7 @@ export default function Edit({ auth, reservation, stores, users, staffs }) {
 
     const cancelReservation = (e) => {
         e.preventDefault();
-        if (confirm('Are you sure you want to cancel this reservation?')) {
+        if (confirm('本当にこの予約をキャンセルしてもよろしいですか？')) {
             destroy(route('staff.reservations.destroy', reservation.id));
         }
     };
@@ -65,18 +65,18 @@ export default function Edit({ auth, reservation, stores, users, staffs }) {
         <StaffLayout
             stores={stores}
         >
-            <Head title={`Edit Reservation #${reservation.id}`} />
+            <Head title={`予約編集 #${reservation.id}`} />
 
             <div className="py-12">
                 <div className="max-w-2xl mx-auto sm:px-6 lg:px-8">
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight mb-6">Edit Reservation #{reservation.id}</h2>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight mb-6">予約編集 #{reservation.id}</h2>
 
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <form onSubmit={submit}>
                                 {/* Store Selection */}
                                 <div>
-                                    <InputLabel htmlFor="store_id" value="Store" />
+                                    <InputLabel htmlFor="store_id" value="店舗" />
                                     <select
                                         id="store_id"
                                         name="store_id"
@@ -85,7 +85,7 @@ export default function Edit({ auth, reservation, stores, users, staffs }) {
                                         className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                                         required
                                     >
-                                        <option value="">Select a Store</option>
+                                        <option value="">店舗を選択してください</option>
                                         {stores.map(store => (
                                             <option key={store.id} value={store.id}>{store.name}</option>
                                         ))}
@@ -95,7 +95,7 @@ export default function Edit({ auth, reservation, stores, users, staffs }) {
 
                                 {/* User Selection */}
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="user_id" value="Customer" />
+                                    <InputLabel htmlFor="user_id" value="顧客" />
                                     <select
                                         id="user_id"
                                         name="user_id"
@@ -104,7 +104,7 @@ export default function Edit({ auth, reservation, stores, users, staffs }) {
                                         className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                                         required
                                     >
-                                        <option value="">Select a Customer</option>
+                                        <option value="">顧客を選択してください</option>
                                         {users.map(user => (
                                             <option key={user.id} value={user.id}>{user.name} ({user.email})</option>
                                         ))}
@@ -114,7 +114,7 @@ export default function Edit({ auth, reservation, stores, users, staffs }) {
 
                                 {/* Menu Selection */}
                                 <div className="mt-4">
-                                    <InputLabel value="Menus" />
+                                    <InputLabel value="メニュー" />
                                     <div className="mt-2 grid grid-cols-1 gap-2 border p-3 rounded-md max-h-48 overflow-y-auto">
                                         {availableMenus.length > 0 ? availableMenus.map(menu => (
                                             <label key={menu.id} className="flex items-center space-x-2">
@@ -125,16 +125,16 @@ export default function Edit({ auth, reservation, stores, users, staffs }) {
                                                     onChange={handleMenuChange}
                                                     className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                                                 />
-                                                <span className="text-gray-700">{menu.name} - ¥{menu.price} ({menu.duration} min)</span>
+                                                <span className="text-gray-700">{menu.name} - ¥{menu.price} ({menu.duration}分)</span>
                                             </label>
-                                        )) : <p className="text-sm text-gray-500">No menus available for this store.</p>}
+                                        )) : <p className="text-sm text-gray-500">この店舗で利用可能なメニューはありません。</p>}
                                     </div>
                                     <InputError message={errors.menu_ids} className="mt-2" />
                                 </div>
 
                                 {/* Date & Time */}
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="start_time" value="Date & Time" />
+                                    <InputLabel htmlFor="start_time" value="日時" />
                                     <TextInput
                                         id="start_time"
                                         type="datetime-local"
@@ -149,7 +149,7 @@ export default function Edit({ auth, reservation, stores, users, staffs }) {
 
                                 {/* Staff Selection */}
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="staff_id" value="Staff (Optional)" />
+                                    <InputLabel htmlFor="staff_id" value="担当スタッフ (任意)" />
                                     <select
                                         id="staff_id"
                                         name="staff_id"
@@ -157,7 +157,7 @@ export default function Edit({ auth, reservation, stores, users, staffs }) {
                                         onChange={(e) => setData('staff_id', e.target.value)}
                                         className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                                     >
-                                        <option value="">Any Available</option>
+                                        <option value="">指名なし (空いているスタッフ)</option>
                                         {staffs.map(staff => (
                                             <option key={staff.id} value={staff.id}>{staff.name}</option>
                                         ))}
@@ -173,13 +173,13 @@ export default function Edit({ auth, reservation, stores, users, staffs }) {
                                             checked={data.is_nominated}
                                             onChange={(e) => setData('is_nominated', e.target.checked)}
                                         />
-                                        <span className="ml-2 text-sm text-gray-600">Nominated</span>
+                                        <span className="ml-2 text-sm text-gray-600">指名する</span>
                                     </label>
                                 </div>
 
                                 {/* Status */}
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="status" value="Status" />
+                                    <InputLabel htmlFor="status" value="ステータス" />
                                     <select
                                         id="status"
                                         name="status"
@@ -188,24 +188,24 @@ export default function Edit({ auth, reservation, stores, users, staffs }) {
                                         className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                                         required
                                     >
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="cancelled">Cancelled</option>
+                                        <option value="confirmed">確定</option>
+                                        <option value="completed">完了</option>
+                                        <option value="cancelled">キャンセル</option>
                                     </select>
                                     <InputError message={errors.status} className="mt-2" />
                                 </div>
 
                                 <div className="flex items-center justify-between mt-4">
                                     <DangerButton type="button" onClick={cancelReservation} >
-                                        Cancel Reservation
+                                        予約をキャンセルする
                                     </DangerButton>
 
                                     <div className="flex items-center">
                                         <Link href={route('staff.reservations.index')} className="text-sm text-gray-600 hover:text-gray-900 underline mr-4">
-                                            Return
+                                            戻る
                                         </Link>
                                         <PrimaryButton className="ml-4" disabled={processing}>
-                                            Update Reservation
+                                            更新する
                                         </PrimaryButton>
                                     </div>
                                 </div>

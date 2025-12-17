@@ -109,7 +109,7 @@ class ReservationController extends Controller
                 // For manual override by staff, maybe we allow it with a warning? 
                 // For now, strict check as per plan.
                 throw ValidationException::withMessages([
-                    'staff_id' => 'The selected staff is not available at this time.',
+                    'staff_id' => '選択されたスタッフはその時間帯に対応できません。',
                 ]);
             }
         } else {
@@ -120,7 +120,7 @@ class ReservationController extends Controller
 
             if (!$availableStaff) {
                  throw ValidationException::withMessages([
-                    'start_time' => 'No staff available at this time.',
+                    'start_time' => 'その時間帯に対応できるスタッフがいません。',
                 ]);
             }
             $staffId = $availableStaff->id;
@@ -144,7 +144,7 @@ class ReservationController extends Controller
             ]);
         }
 
-        return redirect()->route('staff.reservations.index')->with('success', 'Reservation created successfully.');
+        return redirect()->route('staff.reservations.index')->with('success', '予約を作成しました。');
     }
 
     /**
@@ -241,7 +241,7 @@ class ReservationController extends Controller
 
                 if ($hasConflict) {
                      throw ValidationException::withMessages([
-                        'staff_id' => 'The selected staff has another reservation at this time.',
+                        'staff_id' => '選択されたスタッフはその時間帯に別の予約が入っています。',
                     ]);
                 }
                 
@@ -255,7 +255,7 @@ class ReservationController extends Controller
 
                  if (!$hasShift) {
                      throw ValidationException::withMessages([
-                        'staff_id' => 'The selected staff does not have a shift at this time.',
+                        'staff_id' => '選択されたスタッフはその時間帯に出勤していません。',
                     ]);
                 }
 
@@ -280,7 +280,7 @@ class ReservationController extends Controller
         }
         $reservation->menus()->sync($syncData);
 
-        return redirect()->route('staff.reservations.index')->with('success', 'Reservation updated successfully.');
+        return redirect()->route('staff.reservations.index')->with('success', '予約を更新しました。');
     }
 
     /**
@@ -290,6 +290,6 @@ class ReservationController extends Controller
     {
         // Helper to just cancel
         $reservation->update(['status' => 'cancelled']);
-        return redirect()->route('staff.reservations.index')->with('success', 'Reservation cancelled.');
+        return redirect()->route('staff.reservations.index')->with('success', '予約をキャンセルしました。');
     }
 }
