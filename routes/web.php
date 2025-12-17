@@ -54,4 +54,7 @@ Route::prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Staff/Dashboard');
     })->middleware('auth:staff')->name('dashboard');
+
+    Route::resource('stores', \App\Http\Controllers\StoreController::class)
+        ->middleware('auth:staff');
 });
