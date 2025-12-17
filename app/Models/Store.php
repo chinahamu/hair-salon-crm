@@ -16,6 +16,16 @@ class Store extends Model
         'email',
         'description',
         'organization_id',
+        'business_hours',
+        'regular_holidays',
+        'temporary_closures',
+        'min_reservation_unit',
+    ];
+
+    protected $casts = [
+        'business_hours' => 'array',
+        'regular_holidays' => 'array',
+        'temporary_closures' => 'array',
     ];
 
     public function organization()

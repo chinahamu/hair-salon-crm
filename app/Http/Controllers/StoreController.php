@@ -39,6 +39,10 @@ class StoreController extends Controller
             'phone' => 'required|string|max:20',
             'email' => 'nullable|email|max:255',
             'description' => 'nullable|string',
+            'business_hours' => 'nullable|array',
+            'regular_holidays' => 'nullable|array',
+            'temporary_closures' => 'nullable|array',
+            'min_reservation_unit' => 'required|integer|min:1',
         ]);
 
         // Assign to the staff's organization
@@ -80,6 +84,10 @@ class StoreController extends Controller
             'phone' => 'required|string|max:20',
             'email' => 'nullable|email|max:255',
             'description' => 'nullable|string',
+            'business_hours' => 'nullable|array',
+            'regular_holidays' => 'nullable|array',
+            'temporary_closures' => 'nullable|array',
+            'min_reservation_unit' => 'required|integer|min:1',
         ]);
 
         $store->update($validated);

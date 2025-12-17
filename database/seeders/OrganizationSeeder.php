@@ -36,6 +36,9 @@ class OrganizationSeeder extends Seeder
                 'phone' => '03-1234-5678',
                 'email' => 'store-a1@example.com',
                 'description' => 'Main store for Org A',
+                'business_hours' => ['start' => '10:00', 'end' => '20:00'],
+                'regular_holidays' => ['Mon', 'Tue'],
+                'min_reservation_unit' => 30,
             ]);
         }
         if (!$orgA->stores()->where('email', 'store-a2@example.com')->exists()) {
@@ -45,6 +48,9 @@ class OrganizationSeeder extends Seeder
                 'phone' => '03-8765-4321',
                 'email' => 'store-a2@example.com',
                 'description' => 'Second store for Org A',
+                'business_hours' => ['start' => '09:00', 'end' => '18:00'],
+                'regular_holidays' => ['Wed'],
+                'min_reservation_unit' => 60,
             ]);
         }
 
@@ -69,6 +75,9 @@ class OrganizationSeeder extends Seeder
                 'phone' => '06-1234-5678',
                 'email' => 'store-b1@example.com',
                 'description' => 'Main store for Org B',
+                'business_hours' => ['start' => '11:00', 'end' => '21:00'],
+                'regular_holidays' => ['Tue'],
+                'min_reservation_unit' => 15,
             ]);
         }
     }
