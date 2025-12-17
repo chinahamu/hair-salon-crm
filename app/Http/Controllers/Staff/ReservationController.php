@@ -8,6 +8,8 @@ use App\Models\Reservation;
 use App\Models\Staff;
 use App\Models\Store;
 use App\Models\User;
+use App\Models\Facility;
+use App\Models\MenuFacilityRequirement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -126,6 +128,9 @@ class ReservationController extends Controller
             $staffId = $availableStaff->id;
         }
 
+        // Facility Availability Check
+        $this->validateFacilityAvailability($store->id, $startTime, $endTime, $validated['menu_ids']);
+
         $reservation = Reservation::create([
             'user_id' => $validated['user_id'],
             'staff_id' => $staffId,
@@ -226,18 +231,13 @@ class ReservationController extends Controller
                 // and just trust the staff member overrides or simple check.
                 // Actually, let's implement a quick check.
                 
-                // Re-implementing availability check manually to exclude current ID
+                // Check conflict excluding this reservation
                 $hasConflict = Reservation::where('staff_id', $staffId)
                     ->where('id', '!=', $reservation->id)
                     ->where('status', 'confirmed')
-                    ->where(function ($q) use ($startTime, $endTime) {
-                         $q->whereBetween('start_time', [$startTime, $endTime])
-                           ->orWhereBetween('end_time', [$startTime, $endTime])
-                           ->orWhere(function ($q2) use ($startTime, $endTime) {
-                               $q2->where('start_time', '<', $startTime)
-                                 ->where('end_time', '>', $endTime);
-                           });
-                    })->exists();
+                    ->where('start_time', '<', $endTime)
+                    ->where('end_time', '>', $startTime)
+                    ->exists();
 
                 if ($hasConflict) {
                      throw ValidationException::withMessages([
@@ -246,6 +246,7 @@ class ReservationController extends Controller
                 }
                 
                 // Also check Shift
+                // Using whereBetween/inclusive check for shift as it MUST cover the whole duration
                 $hasShift = Staff::find($staffId)->shifts()
                     ->where('store_id', $store->id)
                     ->where('start_time', '<=', $startTime)
@@ -261,6 +262,10 @@ class ReservationController extends Controller
 
             }
         }
+
+        // Facility Availability Check
+        // Pass current reservation ID to exclude it check
+        $this->validateFacilityAvailability($store->id, $startTime, $endTime, $validated['menu_ids'], $reservation->id);
 
         $reservation->update([
             'user_id' => $validated['user_id'],
@@ -291,5 +296,108 @@ class ReservationController extends Controller
         // Helper to just cancel
         $reservation->update(['status' => 'cancelled']);
         return redirect()->route('staff.reservations.index')->with('success', '予約をキャンセルしました。');
+    }
+
+    /**
+     * Validate facility availability for a given time slot and set of menus.
+     *
+     * @param int $storeId
+     * @param \Carbon\Carbon $startTime
+     * @param \Carbon\Carbon $endTime
+     * @param array $menuIds
+     * @param int|null $excludeReservationId
+     * @throws ValidationException
+     */
+    protected function validateFacilityAvailability($storeId, $startTime, $endTime, $menuIds, $excludeReservationId = null)
+    {
+        // 1. Calculate requirements for the new reservation
+        $newRequirements = [];
+        $menuRequirements = MenuFacilityRequirement::whereIn('menu_id', $menuIds)->get();
+        foreach ($menuRequirements as $req) {
+            if (!isset($newRequirements[$req->facility_type])) {
+                $newRequirements[$req->facility_type] = 0;
+            }
+            $newRequirements[$req->facility_type] += $req->quantity;
+        }
+
+        if (empty($newRequirements)) {
+            return;
+        }
+
+        // 2. Fetch all facilities for the store to check total capacity
+        $storeFacilities = Facility::where('store_id', $storeId)
+            ->where('status', 'active')
+            ->get()
+            ->groupBy('type');
+
+        // 3. For each required facility type, check availability
+        foreach ($newRequirements as $type => $requiredQty) {
+            $totalCapacity = isset($storeFacilities[$type]) ? $storeFacilities[$type]->count() : 0;
+
+            if ($requiredQty > $totalCapacity) {
+                throw ValidationException::withMessages([
+                    'menu_ids' => "設備（{$type}）が不足しているため、このメニューの組み合わせは予約できません。",
+                ]);
+            }
+
+            // Get overlapping reservations
+            $overlappingReservations = Reservation::where('store_id', $storeId)
+                ->where('status', 'confirmed')
+                ->where('start_time', '<', $endTime)
+                ->where('end_time', '>', $startTime)
+                ->when($excludeReservationId, function ($q) use ($excludeReservationId) {
+                    $q->where('id', '!=', $excludeReservationId);
+                })
+                ->with(['menus.facilityRequirements'])
+                ->get();
+
+            // Check max usage at any point in time
+            // Collect all relevant time points
+            $timePoints = [];
+            $timePoints[] = $startTime->timestamp;
+            $timePoints[] = $endTime->timestamp;
+
+            foreach ($overlappingReservations as $res) {
+                // Determine the overlapping interval
+                $s = max($startTime->timestamp, $res->start_time->timestamp);
+                $e = min($endTime->timestamp, $res->end_time->timestamp);
+                if ($s < $e) {
+                    $timePoints[] = $s;
+                    $timePoints[] = $e;
+                }
+            }
+            $timePoints = array_unique($timePoints);
+            sort($timePoints);
+
+            // Check usage for each interval
+            for ($i = 0; $i < count($timePoints) - 1; $i++) {
+                $t1 = $timePoints[$i];
+                $t2 = $timePoints[$i+1];
+                
+                // Midpoint check to avoid boundary issues? 
+                // Any reservation covering this interval [t1, t2] contributes to usage.
+                $currentUsage = $requiredQty; // Usage by THIS reservation
+
+                foreach ($overlappingReservations as $res) {
+                    // Check if reservation covers this interval
+                    if ($res->start_time->timestamp <= $t1 && $res->end_time->timestamp >= $t2) {
+                        // Calculate requirement for this reservation
+                        foreach ($res->menus as $menu) {
+                            foreach ($menu->facilityRequirements as $req) {
+                                if ($req->facility_type === $type) {
+                                    $currentUsage += $req->quantity;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if ($currentUsage > $totalCapacity) {
+                    throw ValidationException::withMessages([
+                        'start_time' => "指定された時間帯は設備（{$type}）の空きがありません。",
+                    ]);
+                }
+            }
+        }
     }
 }

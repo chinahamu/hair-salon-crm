@@ -34,14 +34,8 @@ class Staff extends Authenticatable
               ->where('status', 'active');
         })->whereDoesntHave('reservations', function ($q) use ($startTime, $endTime) {
             $q->where('status', 'confirmed')
-              ->where(function ($q) use ($startTime, $endTime) {
-                  $q->whereBetween('start_time', [$startTime, $endTime])
-                    ->orWhereBetween('end_time', [$startTime, $endTime])
-                    ->orWhere(function ($q) use ($startTime, $endTime) {
-                        $q->where('start_time', '<', $startTime)
-                          ->where('end_time', '>', $endTime);
-                    });
-              });
+              ->where('start_time', '<', $endTime)
+              ->where('end_time', '>', $startTime);
         });
     }
 
