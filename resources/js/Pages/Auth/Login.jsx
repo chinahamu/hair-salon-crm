@@ -17,17 +17,17 @@ export default function Login() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
-            <Head title="Log in" />
+            <Head title="ログイン" />
             <div className="w-full max-w-md bg-white/10 backdrop-blur-lg rounded-xl shadow-2xl overflow-hidden p-8 border border-white/20">
                 <div className="mb-8 text-center">
-                    <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-                    <p className="text-indigo-100">Sign in to access your dashboard</p>
+                    <h1 className="text-3xl font-bold text-white mb-2">おかえりなさい</h1>
+                    <p className="text-indigo-100">ダッシュボードにアクセスするにはサインインしてください</p>
                 </div>
 
                 <form onSubmit={submit}>
                     <div className="mb-6">
                         <label className="block text-indigo-100 text-sm font-bold mb-2" htmlFor="email">
-                            Email
+                            メールアドレス
                         </label>
                         <input
                             id="email"
@@ -42,7 +42,7 @@ export default function Login() {
 
                     <div className="mb-6">
                         <label className="block text-indigo-100 text-sm font-bold mb-2" htmlFor="password">
-                            Password
+                            パスワード
                         </label>
                         <input
                             id="password"
@@ -63,9 +63,9 @@ export default function Login() {
                                 checked={data.remember}
                                 onChange={(e) => setData('remember', e.target.checked)}
                             />
-                            Remember me
+                            ログイン状態を保持する
                         </label>
-                        <a href="#" className="text-sm text-indigo-200 hover:text-white transition">Forgot password?</a>
+                        <a href="#" className="text-sm text-indigo-200 hover:text-white transition">パスワードをお忘れですか？</a>
                     </div>
 
                     <button
@@ -73,7 +73,7 @@ export default function Login() {
                         disabled={processing}
                         className="w-full bg-white text-indigo-600 font-bold py-3 px-4 rounded-lg hover:bg-indigo-50 transition duration-300 shadow-lg transform hover:-translate-y-0.5"
                     >
-                        {processing ? 'Logging in...' : 'Log In'}
+                        {processing ? 'ログイン中...' : 'ログイン'}
                     </button>
                 </form>
             </div>

@@ -17,17 +17,17 @@ export default function Login() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500">
-            <Head title="Staff Login" />
+            <Head title="スタッフログイン" />
             <div className="w-full max-w-md bg-white/10 backdrop-blur-lg rounded-xl shadow-2xl overflow-hidden p-8 border border-white/20">
                 <div className="mb-8 text-center">
-                    <h1 className="text-3xl font-bold text-white mb-2">Staff Access</h1>
-                    <p className="text-emerald-100">Authorized personnel only</p>
+                    <h1 className="text-3xl font-bold text-white mb-2">スタッフアクセス</h1>
+                    <p className="text-emerald-100">関係者以外立入禁止</p>
                 </div>
 
                 <form onSubmit={submit}>
                     <div className="mb-6">
                         <label className="block text-emerald-100 text-sm font-bold mb-2" htmlFor="email">
-                            Email
+                            メールアドレス
                         </label>
                         <input
                             id="email"
@@ -42,7 +42,7 @@ export default function Login() {
 
                     <div className="mb-6">
                         <label className="block text-emerald-100 text-sm font-bold mb-2" htmlFor="password">
-                            Password
+                            パスワード
                         </label>
                         <input
                             id="password"
@@ -63,7 +63,7 @@ export default function Login() {
                                 checked={data.remember}
                                 onChange={(e) => setData('remember', e.target.checked)}
                             />
-                            Remember me
+                            ログイン状態を保持する
                         </label>
                     </div>
 
@@ -72,7 +72,7 @@ export default function Login() {
                         disabled={processing}
                         className="w-full bg-white text-emerald-600 font-bold py-3 px-4 rounded-lg hover:bg-emerald-50 transition duration-300 shadow-lg transform hover:-translate-y-0.5"
                     >
-                        {processing ? 'Verifying...' : 'Access Dashboard'}
+                        {processing ? '確認中...' : 'ダッシュボードへアクセス'}
                     </button>
                 </form>
             </div>
