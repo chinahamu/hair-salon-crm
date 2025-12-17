@@ -1,8 +1,14 @@
 import { useState } from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 
-export default function StaffLayout({ children }) {
+export default function StaffLayout({ children, stores = [], selectedStore = null }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+
+    const handleStoreChange = (e) => {
+        router.post(route('staff.dashboard.store'), {
+            store_id: e.target.value,
+        });
+    };
 
     return (
         <div className="min-h-screen bg-gray-100 flex">
@@ -16,13 +22,34 @@ export default function StaffLayout({ children }) {
                         </Link>
                     </div>
 
+                    {/* Store Selector */}
+                    {stores.length > 0 && (
+                        <div className="px-4 py-4 border-b border-gray-200">
+                            <label htmlFor="store-select" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                                店舗選択
+                            </label>
+                            <select
+                                id="store-select"
+                                value={selectedStore?.id || ''}
+                                onChange={handleStoreChange}
+                                className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                            >
+                                {stores.map((store) => (
+                                    <option key={store.id} value={store.id}>
+                                        {store.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+
                     {/* Navigation Links */}
                     <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
                         <Link
                             href={route('staff.dashboard')}
                             className={`flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors duration-150 ease-in-out ${route().current('staff.dashboard')
-                                    ? 'bg-indigo-50 text-indigo-700'
-                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                ? 'bg-indigo-50 text-indigo-700'
+                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                                 }`}
                         >
                             ダッシュボード
@@ -30,8 +57,8 @@ export default function StaffLayout({ children }) {
                         <Link
                             href={route('staff.stores.index')}
                             className={`flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors duration-150 ease-in-out ${route().current('staff.stores.*')
-                                    ? 'bg-indigo-50 text-indigo-700'
-                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                ? 'bg-indigo-50 text-indigo-700'
+                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                                 }`}
                         >
                             店舗管理
@@ -87,12 +114,29 @@ export default function StaffLayout({ children }) {
 
                 {/* Mobile Navigation Dropdown */}
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' md:hidden bg-white border-b border-gray-200'}>
+                    {stores.length > 0 && (
+                        <div className="px-4 py-3 border-b border-gray-200">
+                            <div className="text-sm font-medium text-gray-500 mb-1">店舗選択</div>
+                            <select
+                                value={selectedStore?.id || ''}
+                                onChange={handleStoreChange}
+                                className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            >
+                                {stores.map((store) => (
+                                    <option key={store.id} value={store.id}>
+                                        {store.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+
                     <div className="pt-2 pb-3 space-y-1">
                         <Link
                             href={route('staff.dashboard')}
                             className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${route().current('staff.dashboard')
-                                    ? 'border-indigo-500 text-indigo-700 bg-indigo-50'
-                                    : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300'
+                                ? 'border-indigo-500 text-indigo-700 bg-indigo-50'
+                                : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300'
                                 }`}
                         >
                             ダッシュボード
@@ -100,8 +144,8 @@ export default function StaffLayout({ children }) {
                         <Link
                             href={route('staff.stores.index')}
                             className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${route().current('staff.stores.*')
-                                    ? 'border-indigo-500 text-indigo-700 bg-indigo-50'
-                                    : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300'
+                                ? 'border-indigo-500 text-indigo-700 bg-indigo-50'
+                                : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300'
                                 }`}
                         >
                             店舗管理
@@ -129,3 +173,4 @@ export default function StaffLayout({ children }) {
         </div>
     );
 }
+

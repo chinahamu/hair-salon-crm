@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\StaffAuthController;
+use App\Http\Controllers\Staff\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,9 +52,13 @@ Route::prefix('staff')->name('staff.')->group(function () {
         ->middleware('auth:staff')
         ->name('logout');
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('Staff/Dashboard');
-    })->middleware('auth:staff')->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->middleware('auth:staff')
+        ->name('dashboard');
+
+    Route::post('/dashboard/store', [DashboardController::class, 'selectStore'])
+        ->middleware('auth:staff')
+        ->name('dashboard.store');
 
     Route::resource('stores', \App\Http\Controllers\StoreController::class)
         ->middleware('auth:staff');
