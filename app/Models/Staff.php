@@ -15,6 +15,36 @@ class Staff extends Authenticatable
         return $this->belongsTo(Organization::class);
     }
 
+    public function shifts()
+    {
+        return $this->hasMany(Shift::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function scopeAvailable($query, $storeId, $startTime, $endTime)
+    {
+        return $query->whereHas('shifts', function ($q) use ($storeId, $startTime, $endTime) {
+            $q->where('store_id', $storeId)
+              ->where('start_time', '<=', $startTime)
+              ->where('end_time', '>=', $endTime)
+              ->where('status', 'active');
+        })->whereDoesntHave('reservations', function ($q) use ($startTime, $endTime) {
+            $q->where('status', 'confirmed')
+              ->where(function ($q) use ($startTime, $endTime) {
+                  $q->whereBetween('start_time', [$startTime, $endTime])
+                    ->orWhereBetween('end_time', [$startTime, $endTime])
+                    ->orWhere(function ($q) use ($startTime, $endTime) {
+                        $q->where('start_time', '<', $startTime)
+                          ->where('end_time', '>', $endTime);
+                    });
+              });
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *

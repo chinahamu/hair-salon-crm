@@ -32,4 +32,14 @@ class Store extends Model
     {
         return $this->belongsTo(Organization::class);
     }
+
+    public function shifts()
+    {
+        return $this->hasMany(Shift::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }
