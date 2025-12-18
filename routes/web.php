@@ -87,6 +87,9 @@ Route::prefix('staff')->name('staff.')->group(function () {
         ->middleware('auth:staff');
 
     Route::resource('customers', \App\Http\Controllers\Staff\CustomerController::class);
+
+    Route::post('/customers/{customer}/medical-records', [\App\Http\Controllers\Staff\MedicalRecordController::class, 'store'])->name('medical-records.store');
+    Route::delete('/medical-records/{medicalRecord}', [\App\Http\Controllers\Staff\MedicalRecordController::class, 'destroy'])->name('medical-records.destroy');
 });
 
 Route::middleware(['auth:web'])->group(function () {

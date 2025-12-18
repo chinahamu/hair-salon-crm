@@ -102,4 +102,15 @@ class CustomerController extends Controller
         return redirect()->route('staff.customers.index')
             ->with('success', 'Customer deleted successfully.');
     }
+    /**
+     * Display the specified resource.
+     */
+    public function show(User $customer)
+    {
+        $customer->load(['medicalRecords.images', 'medicalRecords.staff', 'reservations.store', 'reservations.staff']);
+
+        return Inertia::render('Staff/Customers/Show', [
+            'customer' => $customer,
+        ]);
+    }
 }

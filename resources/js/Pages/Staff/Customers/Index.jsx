@@ -65,7 +65,14 @@ export default function Index({ auth, customers, filters }) {
                                     <tbody className="bg-white divide-y divide-gray-200">
                                         {customers.data.map((customer) => (
                                             <tr key={customer.id}>
-                                                <td className="px-6 py-4 whitespace-nowrap">{customer.name}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <Link
+                                                        href={route('staff.customers.show', customer.id)}
+                                                        className="text-indigo-600 hover:text-indigo-900 font-bold"
+                                                    >
+                                                        {customer.name}
+                                                    </Link>
+                                                </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">{customer.phone}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">{customer.email}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">

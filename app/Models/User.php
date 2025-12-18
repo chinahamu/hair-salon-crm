@@ -17,6 +17,11 @@ class User extends Authenticatable
         return $this->hasMany(Reservation::class);
     }
 
+    public function medicalRecords()
+    {
+        return $this->hasMany(MedicalRecord::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
