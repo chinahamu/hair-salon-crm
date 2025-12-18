@@ -24,6 +24,13 @@ export default function Login() {
                     <p className="text-emerald-100">関係者以外立入禁止</p>
                 </div>
 
+                {/* Demo Login Info */}
+                <div className="mb-6 bg-white/10 rounded-lg p-4 text-center border border-emerald-300/30">
+                    <h3 className="text-white font-bold mb-2">デモ用ログイン情報</h3>
+                    <p className="text-emerald-100 text-sm">Email: staff-a@example.com</p>
+                    <p className="text-emerald-100 text-sm">Password: password</p>
+                </div>
+
                 <form onSubmit={submit}>
                     <div className="mb-6">
                         <label className="block text-emerald-100 text-sm font-bold mb-2" htmlFor="email">
