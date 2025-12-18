@@ -88,6 +88,8 @@ Route::prefix('staff')->name('staff.')->group(function () {
 
     Route::resource('customers', \App\Http\Controllers\Staff\CustomerController::class);
 
+    Route::get('/analytics', [\App\Http\Controllers\Staff\AnalyticsController::class, 'index'])->name('analytics.index');
+
     Route::post('/customers/{customer}/medical-records', [\App\Http\Controllers\Staff\MedicalRecordController::class, 'store'])->name('medical-records.store');
     Route::delete('/medical-records/{medicalRecord}', [\App\Http\Controllers\Staff\MedicalRecordController::class, 'destroy'])->name('medical-records.destroy');
 });
