@@ -93,3 +93,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/reservations/create', [\App\Http\Controllers\ReservationController::class, 'create'])->name('reservations.create');
     Route::post('/reservations', [\App\Http\Controllers\ReservationController::class, 'store'])->name('reservations.store');
 });
+
+Route::middleware(['auth:web'])->prefix('customer')->name('customer.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Customer\DashboardController::class, 'index'])->name('dashboard');
+});
