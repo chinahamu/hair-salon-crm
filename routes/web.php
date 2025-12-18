@@ -21,6 +21,9 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
+Route::get('/reserve/{store_code}', [\App\Http\Controllers\GuestReservationController::class, 'index'])->name('guest.reservation.index');
+Route::get('/reserve/{store_code}/availability', [\App\Http\Controllers\GuestReservationController::class, 'getAvailability'])->name('guest.reservation.availability');
+
 // Customer Authentication Routes (Fortify)
 Route::prefix('customer')->name('customer.')->group(function () {
     $limiter = config('fortify.limiters.login');
