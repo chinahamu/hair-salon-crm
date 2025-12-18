@@ -299,8 +299,8 @@ export default function Welcome() {
                             &copy; {new Date().getFullYear()} Hair Salon CRM. All rights reserved.
                         </div>
                         <div className="flex gap-6 text-sm font-medium text-gray-500">
-                            <a href="#" className="hover:text-gray-900">プライバシーポリシー</a>
-                            <a href="#" className="hover:text-gray-900">利用規約</a>
+                            <Link href="/privacy-policy" className="hover:text-gray-900">プライバシーポリシー</Link>
+                            <Link href="/terms-of-service" className="hover:text-gray-900">利用規約</Link>
                             <a href="#inquiry" className="hover:text-gray-900">お問い合わせ</a>
                         </div>
                     </div>

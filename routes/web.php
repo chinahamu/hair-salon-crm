@@ -21,6 +21,14 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
+Route::get('/privacy-policy', function () {
+    return Inertia::render('PrivacyPolicy');
+})->name('privacy-policy');
+
+Route::get('/terms-of-service', function () {
+    return Inertia::render('TermsOfService');
+})->name('terms-of-service');
+
 Route::get('/inquiry', [\App\Http\Controllers\InquiryController::class, 'index'])->name('inquiry.index');
 Route::post('/inquiry', [\App\Http\Controllers\InquiryController::class, 'store'])->name('inquiry.store');
 Route::get('/inquiry/complete', [\App\Http\Controllers\InquiryController::class, 'complete'])->name('inquiry.complete');
