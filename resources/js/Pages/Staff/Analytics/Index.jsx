@@ -1,11 +1,12 @@
 import StaffLayout from '@/Layouts/StaffLayout';
 import { Head, useForm, router } from '@inertiajs/react';
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 
 export default function Index({ auth, metrics, filters }) {
     const { data, setData, get } = useForm({
         start_date: filters.start_date,
         end_date: filters.end_date,
+        period: filters.period || 'day',
     });
 
     const handleFilter = (e) => {
@@ -50,6 +51,18 @@ export default function Index({ auth, metrics, filters }) {
                                     onChange={e => setData('end_date', e.target.value)}
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">表示単位</label>
+                                <select
+                                    value={data.period}
+                                    onChange={e => setData('period', e.target.value)}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                >
+                                    <option value="day">日別</option>
+                                    <option value="month">月別</option>
+                                    <option value="year">年別</option>
+                                </select>
                             </div>
                             <button
                                 type="submit"
@@ -96,9 +109,27 @@ export default function Index({ auth, metrics, filters }) {
                             </ResponsiveContainer>
                         </div>
 
-                        {/* Placeholder for future charts */}
-                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 h-96 flex items-center justify-center text-gray-400">
-                            他のチャートは準備中です...
+                        {/* Sales Trend Bar Chart */}
+                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 h-96">
+                            <h3 className="text-lg font-medium text-gray-900 mb-4">売上推移</h3>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart
+                                    data={metrics.sales_trend}
+                                    margin={{
+                                        top: 5,
+                                        right: 30,
+                                        left: 20,
+                                        bottom: 5,
+                                    }}
+                                >
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="date" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="revenue" name="売上" fill="#8884d8" />
+                                </BarChart>
+                            </ResponsiveContainer>
                         </div>
                     </div>
                 </div>

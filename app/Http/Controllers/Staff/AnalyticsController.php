@@ -106,6 +106,32 @@ class AnalyticsController extends Controller
         });
 
 
+        // 7. Sales Trend
+        // Group by period (day, month, year)
+        // Default to 'day'
+        $period = $request->input('period', 'day'); // day, month, year
+        
+        $salesTrendRequest = \App\Models\Reservation::whereBetween('start_time', [$startDate, $endDate])
+            ->whereIn('status', ['confirmed', 'completed'])
+            ->with('menus') // Eager load menus
+            ->get();
+
+        $format = match($period) {
+            'year' => 'Y',
+            'month' => 'Y-m',
+            default => 'Y-m-d',
+        };
+
+        $salesTrend = $salesTrendRequest->groupBy(function ($reservation) use ($format) {
+            return $reservation->start_time->format($format);
+        })->map(function ($group) {
+            return $group->sum(function ($reservation) {
+                return $reservation->menus->sum('pivot.price');
+            });
+        })->map(function ($value, $key) {
+            return ['date' => $key, 'revenue' => $value];
+        })->values();
+
         return \Inertia\Inertia::render('Staff/Analytics/Index', [
             'metrics' => [
                 'reservation_count' => $reservationCount,
@@ -114,10 +140,12 @@ class AnalyticsController extends Controller
                 'repeat_rate' => $repeatRate,
                 'no_show_rate' => $noShowRate,
                 'media_inflow' => $mediaInflow,
+                'sales_trend' => $salesTrend,
             ],
             'filters' => [
                 'start_date' => $startDate->format('Y-m-d'),
                 'end_date' => $endDate->format('Y-m-d'),
+                'period' => $period,
             ]
         ]);
     }}
