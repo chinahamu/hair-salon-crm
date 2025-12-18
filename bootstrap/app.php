@@ -14,6 +14,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
         ]);
+
+        $middleware->redirectUsersTo(function (\Illuminate\Http\Request $request) {
+            if ($request->is('staff/*')) {
+                return route('staff.dashboard');
+            }
+            return route('customer.dashboard');
+        });
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

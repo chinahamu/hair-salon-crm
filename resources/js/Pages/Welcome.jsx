@@ -20,10 +20,9 @@ export default function Welcome() {
                                 <a href="#features" className="text-gray-600 hover:text-rose-500 transition-colors font-medium">機能</a>
                                 <a href="#solutions" className="text-gray-600 hover:text-rose-500 transition-colors font-medium">ソリューション</a>
                                 <div className="flex items-center gap-4 ml-4">
-                                    <a href="/customer/login" className="text-gray-600 hover:text-rose-500 font-medium transition-colors">お客様ログイン</a>
-                                    <a href="/staff/login" className="px-5 py-2.5 bg-gray-900 text-white rounded-full font-medium hover:bg-rose-600 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                                        スタッフログイン
-                                    </a>
+                                    <Link href="/staff/login" className="px-5 py-2.5 bg-gray-900 text-white rounded-full font-medium hover:bg-rose-600 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                                        デモを見る
+                                    </Link>
                                 </div>
                             </div>
                             {/* Mobile menu button could go here */}
@@ -54,12 +53,9 @@ export default function Welcome() {
                             Hair Salon CRMは、あなたのサロンビジネスの可能性を最大限に引き出す<br className="hidden md:inline" />オールインワンプラットフォームです。
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
-                            <a href="/staff/login" className="px-8 py-4 bg-gradient-to-r from-rose-500 to-orange-500 text-white text-lg font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                                今すぐ始める (スタッフ)
-                            </a>
-                            <a href="/customer/login" className="px-8 py-4 bg-white text-gray-700 border border-gray-200 text-lg font-bold rounded-full shadow-sm hover:bg-gray-50 hover:border-gray-300 transition-all duration-300">
-                                予約確認 (お客様)
-                            </a>
+                            <Link href="/staff/login" className="px-8 py-4 bg-gradient-to-r from-rose-500 to-orange-500 text-white text-lg font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                                デモを見る
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -144,12 +140,12 @@ export default function Welcome() {
                                     ))}
                                 </ul>
                                 <div className="mt-10">
-                                    <a href="/staff/login" className="inline-flex items-center text-white font-bold hover:text-rose-400 transition-colors">
+                                    <Link href="/staff/login" className="inline-flex items-center text-white font-bold hover:text-rose-400 transition-colors">
                                         管理画面へログイン
                                         <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                         </svg>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="relative">
@@ -188,12 +184,9 @@ export default function Welcome() {
                         導入は簡単。今すぐ始めて、サロン運営の「新しい常識」を体験してください。
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href="/staff/login" className="px-8 py-3 bg-gray-900 text-white font-bold rounded-lg shadow hover:bg-black transition-all">
-                            スタッフとして始める
-                        </a>
-                        <a href="/customer/login" className="px-8 py-3 bg-white text-gray-900 border border-gray-200 font-bold rounded-lg shadow hover:bg-gray-50 transition-all">
-                            お客様として利用する
-                        </a>
+                        <Link href="/staff/login" className="px-8 py-3 bg-gray-900 text-white font-bold rounded-lg shadow hover:bg-black transition-all">
+                            デモを見る
+                        </Link>
                     </div>
                 </div>
 
