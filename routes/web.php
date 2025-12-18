@@ -24,6 +24,10 @@ Route::get('/', function () {
 Route::get('/reserve/{store_code}', [\App\Http\Controllers\GuestReservationController::class, 'index'])->name('guest.reservation.index');
 Route::get('/reserve/{store_code}/availability', [\App\Http\Controllers\GuestReservationController::class, 'getAvailability'])->name('guest.reservation.availability');
 Route::get('/reserve/{store_code}/menus', [\App\Http\Controllers\GuestReservationController::class, 'step2Menu'])->name('guest.reservation.menus');
+Route::get('/reserve/{store_code}/staff', [\App\Http\Controllers\GuestReservationController::class, 'step3Staff'])->name('guest.reservation.staff');
+Route::get('/reserve/{store_code}/confirm', [\App\Http\Controllers\GuestReservationController::class, 'step4Confirm'])->name('guest.reservation.confirm');
+Route::post('/reserve/{store_code}/confirm', [\App\Http\Controllers\GuestReservationController::class, 'store'])->name('guest.reservation.store');
+Route::get('/reserve/{store_code}/complete', [\App\Http\Controllers\GuestReservationController::class, 'complete'])->name('guest.reservation.complete');
 
 // Customer Authentication Routes (Fortify)
 Route::prefix('customer')->name('customer.')->group(function () {

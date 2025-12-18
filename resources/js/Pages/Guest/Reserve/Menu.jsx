@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 
 export default function Menu({ store, menus, date, time }) {
     const [selectedMenuIds, setSelectedMenuIds] = useState([]);
@@ -138,8 +138,12 @@ export default function Menu({ store, menus, date, time }) {
                             }
                         `}
                         onClick={() => {
-                            // Proceed to next step (Not implemented yet)
-                            alert('Step 3: Confirm/UserInfo (Not implemented yet)\nMenus: ' + selectedMenuIds.join(', '));
+                            router.visit(route('guest.reservation.staff', {
+                                store_code: store.store_code,
+                                date: date,
+                                time: time,
+                                menu_ids: selectedMenuIds
+                            }));
                         }}
                     >
                         次へ進む

@@ -135,4 +135,165 @@ class GuestReservationController extends Controller
             'time' => $request->time,
         ]);
     }
+
+    public function step3Staff(Request $request, $store_code)
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'time' => 'required',
+            'menu_ids' => 'required|array',
+            'menu_ids.*' => 'exists:menus,id',
+        ]);
+
+        $store = Store::where('store_code', $store_code)->firstOrFail();
+        $menus = \App\Models\Menu::whereIn('id', $request->menu_ids)->get();
+
+        // Calculate total duration
+        $totalDuration = $menus->sum('duration');
+        // Calculate price for view
+        $totalPrice = $menus->sum('price');
+
+        // Determine Start and End Time
+        $startDateTime = Carbon::parse($request->date . ' ' . $request->time);
+        $endDateTime = $startDateTime->copy()->addMinutes($totalDuration);
+
+        // Find Available Staff
+        // We use the scopeAvailable logic (or manual query)
+        // We need staff who have an ACTIVE shift covering the entirity of [start, end]
+        // AND do not have any CONFIRMED reservation overlapping [start, end]
+
+        $availableStaff = \App\Models\Staff::whereHas('shifts', function ($q) use ($store, $startDateTime, $endDateTime) {
+            $q->where('store_id', $store->id)
+              ->where('start_time', '<=', $startDateTime)
+              ->where('end_time', '>=', $endDateTime)
+              ->where('status', '!=', 'cancelled'); // Assuming status logic, default migration didn't have status enum but string
+        })->whereDoesntHave('reservations', function ($q) use ($startDateTime, $endDateTime) {
+            $q->where('status', '!=', 'cancelled')
+              ->where(function ($query) use ($startDateTime, $endDateTime) {
+                  $query->whereBetween('start_time', [$startDateTime, $endDateTime])
+                        ->orWhereBetween('end_time', [$startDateTime, $endDateTime])
+                        ->orWhere(function ($sub) use ($startDateTime, $endDateTime) {
+                            $sub->where('start_time', '<=', $startDateTime)
+                                ->where('end_time', '>=', $endDateTime);
+                        });
+              });
+        })->get();
+
+        return Inertia::render('Guest/Reserve/Staff', [
+            'store' => $store,
+            'date' => $request->date,
+            'time' => $request->time,
+            'menus' => $menus, // Pass full menu objects for display
+            'totalPrice' => $totalPrice,
+            'totalDuration' => $totalDuration,
+            'availableStaff' => $availableStaff,
+        ]);
+    }
+
+    public function step4Confirm(Request $request, $store_code)
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'time' => 'required',
+            'menu_ids' => 'required|array',
+            'staff_id' => 'nullable|exists:staff,id',
+        ]);
+
+        $store = Store::where('store_code', $store_code)->firstOrFail();
+        $menus = \App\Models\Menu::whereIn('id', $request->menu_ids)->get();
+        $staff = $request->staff_id ? \App\Models\Staff::find($request->staff_id) : null;
+
+        $totalDuration = $menus->sum('duration');
+        $totalPrice = $menus->sum('price');
+        
+        return Inertia::render('Guest/Reserve/Confirm', [
+            'store' => $store,
+            'date' => $request->date,
+            'time' => $request->time,
+            'menus' => $menus,
+            'staff' => $staff,
+            'totalDuration' => $totalDuration,
+            'totalPrice' => $totalPrice,
+            'auth_user' => \Illuminate\Support\Facades\Auth::user()
+        ]);
+    }
+
+    public function store(Request $request, $store_code)
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'time' => 'required',
+            'menu_ids' => 'required|array',
+            'staff_id' => 'nullable|exists:staff,id',
+            'action_type' => 'required|in:login,register,logged_in',
+            // Validation rules are conditional
+            'email' => 'required_if:action_type,login,register|email',
+            'password' => 'required_if:action_type,login,register',
+            'name' => 'required_if:action_type,register',
+            'phone' => 'required_if:action_type,register',
+        ]);
+
+        $store = Store::where('store_code', $store_code)->firstOrFail();
+
+        // 1. Authenticate or Register User
+        if ($request->action_type === 'register') {
+            $user = \App\Models\User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'password' => \Illuminate\Support\Facades\Hash::make($request->password),
+            ]);
+            \Illuminate\Support\Facades\Auth::login($user);
+        } elseif ($request->action_type === 'login') {
+            $credentials = $request->only('email', 'password');
+            if (!\Illuminate\Support\Facades\Auth::attempt($credentials)) {
+                return back()->withErrors(['email' => '認証情報が正しくありません。']);
+            }
+        } elseif ($request->action_type === 'logged_in') {
+            if (!\Illuminate\Support\Facades\Auth::check()) {
+                 return back()->withErrors(['message' => 'ログインセッションが切れました。再度ログインしてください。']);
+            }
+        }
+
+        $user = \Illuminate\Support\Facades\Auth::user();
+
+        // 2. Create Reservation
+        $menus = \App\Models\Menu::whereIn('id', $request->menu_ids)->get();
+        $totalDuration = $menus->sum('duration');
+        $startDateTime = Carbon::parse($request->date . ' ' . $request->time);
+        $endDateTime = $startDateTime->copy()->addMinutes($totalDuration);
+
+        $reservation = Reservation::create([
+            'user_id' => $user->id,
+            'store_id' => $store->id,
+            'staff_id' => $request->staff_id, // Nullable
+            'start_time' => $startDateTime,
+            'end_time' => $endDateTime,
+            'is_nominated' => !is_null($request->staff_id),
+            'status' => 'confirmed', 
+        ]);
+
+        // Attach Menus
+        $reservation->menus()->attach($request->menu_ids, [
+            'price' => 0, // Pivot data, maybe copy current price?
+            'duration' => 0 // Pivot data
+        ]);
+        // Update pivot with actual data
+        foreach ($menus as $menu) {
+             $reservation->menus()->updateExistingPivot($menu->id, [
+                 'price' => $menu->price,
+                 'duration' => $menu->duration
+             ]);
+        }
+        
+        return redirect()->route('guest.reservation.complete', ['store_code' => $store_code]);
+    }
+
+    public function complete(Request $request, $store_code)
+    {
+        $store = Store::where('store_code', $store_code)->firstOrFail();
+        return Inertia::render('Guest/Reserve/Complete', [
+            'store' => $store
+        ]);
+    }
 }
