@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StaffLayout from '@/Layouts/StaffLayout';
-import { Head, Link, useForm, router } from '@inertiajs/react'; // Use router for manual visits
+import { Head, Link, useForm, router } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import InputLabel from '@/Components/InputLabel';
@@ -10,7 +10,6 @@ export default function Index({ auth, reservations, stores, staffs, filters }) {
     const [viewMode, setViewMode] = useState(filters.view_mode || 'list');
 
     // Current Navigation Date
-    // If date filter exists, use it. Otherwise today.
     const [currentDate, setCurrentDate] = useState(filters.date ? new Date(filters.date) : new Date());
 
     const { data, setData, get } = useForm({
@@ -19,33 +18,66 @@ export default function Index({ auth, reservations, stores, staffs, filters }) {
         staff_id: filters.staff_id || '',
     });
 
+    // --- Timezone & Date Helpers ---
+
+    // Format a Date object or ISO string to 'YYYY-MM-DD' in JST
+    const toJSTDateString = (dateInput) => {
+        if (!dateInput) return '';
+        const date = new Date(dateInput);
+        return date.toLocaleDateString('en-CA', { timeZone: 'Asia/Tokyo' });
+    };
+
+    // Format a Date object or ISO string to Display Date (e.g. 2024/12/18) in JST
+    const formatDisplayDateJST = (dateInput) => {
+        if (!dateInput) return '';
+        const date = new Date(dateInput);
+        return date.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' });
+    };
+
+    // Format a Date object or ISO string to HH:MM in JST
+    const formatTimeJST = (dateInput) => {
+        if (!dateInput) return '';
+        const date = new Date(dateInput);
+        return date.toLocaleTimeString('ja-JP', {
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: 'Asia/Tokyo',
+        });
+    };
+
+    // Format full datetime in JST
+    const formatDateTimeJST = (dateInput) => {
+        if (!dateInput) return '';
+        const date = new Date(dateInput);
+        return date.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+    };
+
+    // Check if two dates are on the same day in JST
+    const isSameDayJST = (d1, d2) => {
+        return toJSTDateString(d1) === toJSTDateString(d2);
+    };
+
+    // --- Handlers ---
+
     const handleFilterChange = (e) => {
         setData(e.target.name, e.target.value);
     };
 
     const submitFilter = (e) => {
         e.preventDefault();
-        // For list view, we use standard submit.
-        // For calendar views, we might handle differently, but let's stick to standard GET for now.
         const query = {
             store_id: data.store_id,
             staff_id: data.staff_id,
             view_mode: viewMode,
         };
 
-        // If list view, use specific date if set
         if (viewMode === 'list' && data.date) {
             query.date = data.date;
         } else {
-            // For calendar views, we need to calculate range based on currentDate
-            // But 'submitFilter' is triggered by the "Filter" button which is mostly for Store/Staff/Date inputs.
-            // If user explicitly sets a date in "date" input, we should honor it even in Calendar view (jump to that date)
             if (data.date) {
                 const newDate = new Date(data.date);
                 setCurrentDate(newDate);
-                // We don't necessarily reload page here, we let the useEffect or handleNavigation do it?
-                // But wait, we need to fetch data.
-                query.date = data.date; // Use as anchor
+                query.date = data.date;
             }
         }
 
@@ -58,47 +90,38 @@ export default function Index({ auth, reservations, stores, staffs, filters }) {
 
     // Re-fetch when viewMode or currentDate changes
     useEffect(() => {
-        if (viewMode === 'list') return; // List view is manual filter driven usually
+        if (viewMode === 'list') return;
 
         const query = {
             store_id: data.store_id,
             staff_id: data.staff_id,
             view_mode: viewMode,
-            get_all: 1, // Get all events for the range
+            get_all: 1,
         };
 
         let start = new Date(currentDate);
         let end = new Date(currentDate);
 
         if (viewMode === 'month') {
-            start.setDate(1); // 1st of month
+            start.setDate(1);
             end.setMonth(end.getMonth() + 1);
-            end.setDate(0); // Last of month
-
-            // Adjust to full weeks for grid?
-            // start.setDate(start.getDate() - start.getDay()); // Go back to Sunday
-
+            end.setDate(0);
         } else if (viewMode === 'week') {
             const day = start.getDay();
-            const diff = start.getDate() - day; // adjust when day is sunday
+            const diff = start.getDate() - day;
             start.setDate(diff);
             end.setDate(start.getDate() + 6);
-            // Time range? 00:00 to 23:59
         } else if (viewMode === 'day') {
             // Just one day
         }
 
-        // Format YYYY-MM-DD
-        const formatDate = (d) => d.toISOString().split('T')[0];
-
-        // Add padding to fetch slightly more?
-        query.start_date = formatDate(start);
-        query.end_date = formatDate(end);
+        query.start_date = toJSTDateString(start);
+        query.end_date = toJSTDateString(end);
 
         router.get(route('staff.reservations.index'), query, {
             preserveState: true,
             preserveScroll: true,
-            only: ['reservations'], // Optimistic update?
+            only: ['reservations'],
         });
 
     }, [currentDate, viewMode]);
@@ -122,8 +145,8 @@ export default function Index({ auth, reservations, stores, staffs, filters }) {
                     key={mode}
                     onClick={() => setViewMode(mode)}
                     className={`px-3 py-1 text-sm rounded-md transition-colors ${viewMode === mode
-                            ? 'bg-white shadow text-gray-900 font-medium'
-                            : 'text-gray-500 hover:text-gray-900'
+                        ? 'bg-white shadow text-gray-900 font-medium'
+                        : 'text-gray-500 hover:text-gray-900'
                         }`}
                 >
                     {mode === 'list' && 'リスト'}
@@ -152,29 +175,27 @@ export default function Index({ auth, reservations, stores, staffs, filters }) {
 
     const renderMonthView = () => {
         const year = currentDate.getFullYear();
-        const month = currentDate.getMonth(); // 0-indexed
+        const month = currentDate.getMonth();
 
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
 
         const daysInMonth = lastDay.getDate();
-        const startingDay = firstDay.getDay(); // 0 (Sun) - 6 (Sat)
+        const startingDay = firstDay.getDay();
 
         const days = [];
-        // Empty slots for previous month
+        // Empty slots
         for (let i = 0; i < startingDay; i++) {
             days.push(<div key={`empty-${i}`} className="bg-gray-50 h-24 border-b border-r border-gray-200" />);
         }
 
-        // Days of month
+        const resList = Array.isArray(reservations) ? reservations : (reservations.data || []);
+
         for (let i = 1; i <= daysInMonth; i++) {
-            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
-            // Filter reservations for this day
-            // Note: res.start_time is assumed to be ISO string or parseable
-            const dayReservations = Array.isArray(reservations) ? reservations.filter(r => r.start_time.startsWith(dateStr)) : [];
-            // Note: reservations might be paginated object or array. Check structure.
-            const resList = Array.isArray(reservations) ? reservations : (reservations.data || []);
-            const daysRes = resList.filter(r => r.start_time.startsWith(dateStr));
+            const cellDate = new Date(year, month, i);
+            const targetDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+
+            const daysRes = resList.filter(r => toJSTDateString(r.start_time) === targetDateStr);
 
             days.push(
                 <div key={i} className="bg-white h-24 border-b border-r border-gray-200 p-1 overflow-y-auto">
@@ -182,7 +203,7 @@ export default function Index({ auth, reservations, stores, staffs, filters }) {
                     <div className="mt-1 space-y-1">
                         {daysRes.map(res => (
                             <Link key={res.id} href={route('staff.reservations.edit', res.id)} className="block text-xs bg-indigo-50 text-indigo-700 rounded px-1 truncate">
-                                {new Date(res.start_time).getHours()}:{String(new Date(res.start_time).getMinutes()).padStart(2, '0')} {res.user?.name}
+                                {formatTimeJST(res.start_time)} {res.user?.name}
                             </Link>
                         ))}
                     </div>
@@ -203,7 +224,6 @@ export default function Index({ auth, reservations, stores, staffs, filters }) {
     };
 
     const renderWeekView = () => {
-        // Simple Vertical Columns Week View
         const startOfWeek = new Date(currentDate);
         const day = startOfWeek.getDay();
         startOfWeek.setDate(startOfWeek.getDate() - day);
@@ -220,38 +240,38 @@ export default function Index({ auth, reservations, stores, staffs, filters }) {
         return (
             <div className="border border-gray-200 mt-4 overflow-x-auto">
                 <div className="grid grid-cols-7 min-w-[800px]">
-                    {weekDays.map((d, idx) => (
-                        <div key={idx} className="border-r border-gray-200 last:border-r-0">
-                            <div className="bg-gray-100 text-center py-2 text-sm font-medium border-b border-gray-200">
-                                {d.getMonth() + 1}/{d.getDate()} ({['日', '月', '火', '水', '木', '金', '土'][d.getDay()]})
+                    {weekDays.map((d, idx) => {
+                        const cellDateStr = toJSTDateString(d);
+
+                        return (
+                            <div key={idx} className="border-r border-gray-200 last:border-r-0">
+                                <div className="bg-gray-100 text-center py-2 text-sm font-medium border-b border-gray-200">
+                                    {d.getMonth() + 1}/{d.getDate()} ({['日', '月', '火', '水', '木', '金', '土'][d.getDay()]})
+                                </div>
+                                <div className="bg-white min-h-[400px] p-2 space-y-2">
+                                    {resList.filter(r => toJSTDateString(r.start_time) === cellDateStr).map(r => (
+                                        <Link key={r.id} href={route('staff.reservations.edit', r.id)} className="block p-2 text-xs bg-indigo-50 border border-indigo-100 rounded hover:bg-indigo-100">
+                                            <div className="font-bold">{formatTimeJST(r.start_time)}</div>
+                                            <div>{r.user?.name}</div>
+                                            <div className="text-gray-500">{r.staff?.name}</div>
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="bg-white min-h-[400px] p-2 space-y-2">
-                                {resList.filter(r => r.start_time.startsWith(d.toISOString().split('T')[0])).map(r => (
-                                    <Link key={r.id} href={route('staff.reservations.edit', r.id)} className="block p-2 text-xs bg-indigo-50 border border-indigo-100 rounded hover:bg-indigo-100">
-                                        <div className="font-bold">{new Date(r.start_time).getHours()}:{String(new Date(r.start_time).getMinutes()).padStart(2, '0')}</div>
-                                        <div>{r.user?.name}</div>
-                                        <div className="text-gray-500">{r.staff?.name}</div>
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         );
     };
 
-    // Day View: Columns by Staff (if multiple)
-    // Or just simple list if filtered by Staff
     const renderDayView = () => {
-        const dateStr = currentDate.toISOString().split('T')[0];
+        // We want strict "Same Date in JST" as currentDate
+        const targetDateStr = toJSTDateString(currentDate);
         const resList = Array.isArray(reservations) ? reservations : (reservations.data || []);
-        const daysRes = resList.filter(r => r.start_time.startsWith(dateStr));
+        const daysRes = resList.filter(r => toJSTDateString(r.start_time) === targetDateStr);
 
-        // Group by staff
         const staffGroups = {};
-        // Initialize with filtered staff or all staff
-        // Note: 'staffs' prop passed from controller
         const displayStaffs = (data.staff_id)
             ? staffs.filter(s => s.id == data.staff_id)
             : staffs;
@@ -260,34 +280,25 @@ export default function Index({ auth, reservations, stores, staffs, filters }) {
             staffGroups[s.id] = { staff: s, reservations: [] };
         });
 
-        // If there are reservations for staff not in list (edge case), handle them? 
-        // Just focus on displayStaffs.
-
         daysRes.forEach(r => {
             if (r.staff_id && staffGroups[r.staff_id]) {
                 staffGroups[r.staff_id].reservations.push(r);
-            } else if (!r.staff_id) {
-                // Free floating?
             }
         });
 
         return (
             <div className="border border-gray-200 mt-4 overflow-x-auto">
                 <div className="flex min-w-full">
-                    {/* Time Column? Optional */}
-
                     {Object.values(staffGroups).map((group) => (
                         <div key={group.staff.id} className="flex-1 min-w-[150px] border-r border-gray-200">
                             <div className="bg-gray-100 text-center py-2 text-sm font-bold border-b border-gray-200 sticky top-0">
                                 {group.staff.name}
                             </div>
                             <div className="bg-white min-h-[400px] p-2 relative">
-                                {/* Ideally position absolute based on time, but simple list for now */}
                                 {group.reservations.sort((a, b) => new Date(a.start_time) - new Date(b.start_time)).map(r => (
                                     <Link key={r.id} href={route('staff.reservations.edit', r.id)} className="block mb-2 p-2 text-xs bg-indigo-50 border border-indigo-100 rounded hover:bg-indigo-100">
                                         <div className="font-bold">
-                                            {new Date(r.start_time).getHours()}:{String(new Date(r.start_time).getMinutes()).padStart(2, '0')}
-                                            - {new Date(r.end_time).getHours()}:{String(new Date(r.end_time).getMinutes()).padStart(2, '0')}
+                                            {formatTimeJST(r.start_time)} - {formatTimeJST(r.end_time)}
                                         </div>
                                         <div>{r.user?.name}</div>
                                         <div>{r.menus?.map(m => m.name).join(', ')}</div>
@@ -325,8 +336,8 @@ export default function Index({ auth, reservations, stores, staffs, filters }) {
                                 <tr key={reservation.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{reservation.id}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {new Date(reservation.start_time).toLocaleString('ja-JP')} <br />
-                                        <span className="text-gray-500 text-xs">~ {new Date(reservation.end_time).toLocaleTimeString('ja-JP')}</span>
+                                        {formatDateTimeJST(reservation.start_time)} <br />
+                                        <span className="text-gray-500 text-xs">~ {formatTimeJST(reservation.end_time)}</span>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{reservation.user?.name || '不明'}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{reservation.store?.name}</td>
