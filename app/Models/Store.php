@@ -10,6 +10,7 @@ class Store extends Model
     use HasFactory;
 
     protected $fillable = [
+        'store_code',
         'name',
         'address',
         'phone',
@@ -27,6 +28,15 @@ class Store extends Model
         'regular_holidays' => 'array',
         'temporary_closures' => 'array',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($store) {
+            if (empty($store->store_code)) {
+                $store->store_code = \Illuminate\Support\Str::random(10);
+            }
+        });
+    }
 
     public function organization()
     {
