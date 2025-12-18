@@ -21,6 +21,10 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
+Route::get('/inquiry', [\App\Http\Controllers\InquiryController::class, 'index'])->name('inquiry.index');
+Route::post('/inquiry', [\App\Http\Controllers\InquiryController::class, 'store'])->name('inquiry.store');
+Route::get('/inquiry/complete', [\App\Http\Controllers\InquiryController::class, 'complete'])->name('inquiry.complete');
+
 Route::get('/reserve/{store_code}', [\App\Http\Controllers\GuestReservationController::class, 'index'])->name('guest.reservation.index');
 Route::get('/reserve/{store_code}/availability', [\App\Http\Controllers\GuestReservationController::class, 'getAvailability'])->name('guest.reservation.availability');
 Route::get('/reserve/{store_code}/menus', [\App\Http\Controllers\GuestReservationController::class, 'step2Menu'])->name('guest.reservation.menus');

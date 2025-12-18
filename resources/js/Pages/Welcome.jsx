@@ -1,6 +1,18 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Welcome() {
+    const { data, setData, post, processing, errors } = useForm({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+    });
+
+    const submit = (e) => {
+        e.preventDefault();
+        post(route('inquiry.store'));
+    };
+
     return (
         <>
             <Head title="Hair Salon CRM - サロン運営を美しく" />
@@ -19,6 +31,7 @@ export default function Welcome() {
                             <div className="hidden md:flex space-x-8 items-center">
                                 <a href="#features" className="text-gray-600 hover:text-rose-500 transition-colors font-medium">機能</a>
                                 <a href="#solutions" className="text-gray-600 hover:text-rose-500 transition-colors font-medium">ソリューション</a>
+                                <a href="#inquiry" className="text-gray-600 hover:text-rose-500 transition-colors font-medium">お問い合わせ</a>
                                 <div className="flex items-center gap-4 ml-4">
                                     <Link href="/staff/login" className="px-5 py-2.5 bg-gray-900 text-white rounded-full font-medium hover:bg-rose-600 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                                         デモを見る
@@ -180,13 +193,98 @@ export default function Welcome() {
                     <h2 className="text-3xl font-bold text-gray-900 mb-6">
                         あなたのサロンも、<br className="md:hidden" />新しいステージへ
                     </h2>
-                    <p className="text-gray-600 mb-8 max-w-xl mx-auto">
+                    <p className="text-gray-600 mb-6 max-w-xl mx-auto">
                         導入は簡単。今すぐ始めて、サロン運営の「新しい常識」を体験してください。
+                    </p>
+                    <p className="text-2xl font-bold text-gray-900 mb-8">
+                        価格：税込月額2万円
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                         <Link href="/staff/login" className="px-8 py-3 bg-gray-900 text-white font-bold rounded-lg shadow hover:bg-black transition-all">
                             デモを見る
                         </Link>
+                    </div>
+                </div>
+
+                {/* Inquiry Section */}
+                <div id="inquiry" className="py-20 bg-gray-50">
+                    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-4">お問い合わせ</h2>
+                            <p className="text-gray-600">
+                                サービスに関するご質問やご相談など、お気軽にお問い合わせください。<br />
+                                通常、3営業日以内にご返信いたします。
+                            </p>
+                        </div>
+
+                        <div className="bg-white overflow-hidden shadow-xl sm:rounded-2xl p-8">
+                            <form onSubmit={submit} className="space-y-6">
+                                <div>
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">お名前 <span className="text-rose-500">*</span></label>
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        value={data.name}
+                                        onChange={(e) => setData('name', e.target.value)}
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500"
+                                        placeholder="山田 太郎"
+                                    />
+                                    {errors.name && <div className="text-rose-500 text-sm mt-1">{errors.name}</div>}
+                                </div>
+
+                                <div>
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">メールアドレス <span className="text-rose-500">*</span></label>
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        value={data.email}
+                                        onChange={(e) => setData('email', e.target.value)}
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500"
+                                        placeholder="taro.yamada@example.com"
+                                    />
+                                    {errors.email && <div className="text-rose-500 text-sm mt-1">{errors.email}</div>}
+                                </div>
+
+                                <div>
+                                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700">件名 <span className="text-rose-500">*</span></label>
+                                    <input
+                                        id="subject"
+                                        type="text"
+                                        value={data.subject}
+                                        onChange={(e) => setData('subject', e.target.value)}
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500"
+                                        placeholder="導入に関するご相談"
+                                    />
+                                    {errors.subject && <div className="text-rose-500 text-sm mt-1">{errors.subject}</div>}
+                                </div>
+
+                                <div>
+                                    <label htmlFor="message" className="block text-sm font-medium text-gray-700">お問い合わせ内容 <span className="text-rose-500">*</span></label>
+                                    <textarea
+                                        id="message"
+                                        rows="5"
+                                        value={data.message}
+                                        onChange={(e) => setData('message', e.target.value)}
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500"
+                                        placeholder="ご自由にご記入ください"
+                                    ></textarea>
+                                    {errors.message && <div className="text-rose-500 text-sm mt-1">{errors.message}</div>}
+                                </div>
+
+                                <div className="flex justify-center pt-4">
+                                    <button
+                                        type="submit"
+                                        disabled={processing}
+                                        className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-rose-500 to-orange-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                        お問い合わせを送信
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
@@ -203,7 +301,7 @@ export default function Welcome() {
                         <div className="flex gap-6 text-sm font-medium text-gray-500">
                             <a href="#" className="hover:text-gray-900">プライバシーポリシー</a>
                             <a href="#" className="hover:text-gray-900">利用規約</a>
-                            <a href="#" className="hover:text-gray-900">お問い合わせ</a>
+                            <a href="#inquiry" className="hover:text-gray-900">お問い合わせ</a>
                         </div>
                     </div>
                 </footer>
