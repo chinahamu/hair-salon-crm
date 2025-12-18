@@ -20,6 +20,39 @@ export default function Dashboard({ stores, selectedStore }) {
                         </div>
                     </div>
 
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="p-6">
+                            <h3 className="text-lg font-medium text-gray-900 mb-4">デモ用情報</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                    <h4 className="font-medium text-gray-700 mb-2">顧客ログイン認証情報</h4>
+                                    <dl className="text-sm">
+                                        <div className="flex justify-between py-1">
+                                            <dt className="text-gray-500">Email:</dt>
+                                            <dd className="font-mono text-gray-900">customer@example.com</dd>
+                                        </div>
+                                        <div className="flex justify-between py-1">
+                                            <dt className="text-gray-500">Password:</dt>
+                                            <dd className="font-mono text-gray-900">password</dd>
+                                        </div>
+                                    </dl>
+                                </div>
+                                <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
+                                    <h4 className="font-medium text-emerald-800 mb-2">予約ページURL</h4>
+                                    <p className="text-sm text-emerald-600 mb-2">以下のURLから予約デモを確認できます</p>
+                                    <a
+                                        href="https://hair-salon-crm.meta-alchemist.co.jp/reserve/bGV8iIR397"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-sm font-medium text-emerald-700 hover:text-emerald-900 underline break-all"
+                                    >
+                                        https://hair-salon-crm.meta-alchemist.co.jp/reserve/bGV8iIR397
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {selectedStore && (
                         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div className="p-6">
