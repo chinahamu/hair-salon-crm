@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             OrganizationSeeder::class,
             // MenuSeeder::class, // Assuming this exists or will be added
             FacilitySeeder::class,
+            ShiftSeeder::class,
         ]);
     }
 }
