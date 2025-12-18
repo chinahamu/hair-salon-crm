@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 
 export default function Index({ store }) {
     // Helper to get local date string YYYY-MM-DD
@@ -120,6 +120,11 @@ export default function Index({ store }) {
                                         <button
                                             key={index}
                                             disabled={!slot.available}
+                                            onClick={() => router.visit(route('guest.reservation.menus', {
+                                                store_code: store.store_code,
+                                                date: selectedDate,
+                                                time: slot.time
+                                            }))}
                                             className={`
                                                 relative flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all
                                                 ${slot.available

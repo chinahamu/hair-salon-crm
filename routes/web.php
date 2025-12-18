@@ -23,6 +23,7 @@ Route::get('/', function () {
 
 Route::get('/reserve/{store_code}', [\App\Http\Controllers\GuestReservationController::class, 'index'])->name('guest.reservation.index');
 Route::get('/reserve/{store_code}/availability', [\App\Http\Controllers\GuestReservationController::class, 'getAvailability'])->name('guest.reservation.availability');
+Route::get('/reserve/{store_code}/menus', [\App\Http\Controllers\GuestReservationController::class, 'step2Menu'])->name('guest.reservation.menus');
 
 // Customer Authentication Routes (Fortify)
 Route::prefix('customer')->name('customer.')->group(function () {

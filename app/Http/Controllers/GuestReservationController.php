@@ -117,4 +117,22 @@ class GuestReservationController extends Controller
             'slots' => $slots
         ]);
     }
+
+    public function step2Menu(Request $request, $store_code)
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'time' => 'required', // Format: HH:MM
+        ]);
+
+        $store = Store::where('store_code', $store_code)->firstOrFail();
+        $menus = $store->menus()->where('status', true)->get();
+
+        return Inertia::render('Guest/Reserve/Menu', [
+            'store' => $store,
+            'menus' => $menus,
+            'date' => $request->date,
+            'time' => $request->time,
+        ]);
+    }
 }
